@@ -3,6 +3,9 @@
 
 name: Firebase PR Deploy
 on: pull_request
+env:
+  VITE_FIREBASE_API: ${{ secrets.VITE_FIREBASE_API }}
+
 permissions:
   checks: write
   contents: read
@@ -11,9 +14,12 @@ jobs:
   build_and_preview:
     if: ${{ github.event.pull_request.head.repo.full_name == github.repository }}
     runs-on: ubuntu-latest
+    env:
+      VITE_FIREBASE_API: ${{ secrets.VITE_FIREBASE_API }}
+
     steps:
       - uses: actions/checkout@v4
-      - run: npm run build
+      - run: npm ci && npm run build
       - uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           repoToken: ${{ secrets.GITHUB_TOKEN }}
