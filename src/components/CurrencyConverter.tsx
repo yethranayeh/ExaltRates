@@ -95,7 +95,7 @@ export function CurrencyConverter() {
 			<div className='flex flex-col gap-5 container max-w-[500px]'>
 				<div>
 					{from && (
-						<div className='flex flex-row select-none items-center text-primary-dark  text-sm'>
+						<div className='flex flex-row select-none items-center text-primary-dark  text-sm mb-[-9px]'>
 							<span>1×</span>
 							<Currency name={from} />
 							<span className='ml-1'>equals</span>
@@ -106,7 +106,7 @@ export function CurrencyConverter() {
 							<AmountDisplay rate={conversionRate} currencyName={to} />
 						</div>
 					)}
-					<p className='text-primary-dark  italic text-sm mt-2'>
+					<p className='text-primary-dark font-[FontinItalic] text-sm mt-2'>
 						Last updated: {new Date(currencyMap.meta.createdAt).toLocaleString()}
 					</p>
 				</div>

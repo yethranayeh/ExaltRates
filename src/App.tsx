@@ -1,4 +1,6 @@
 import "./index.css";
+import "./assets/fonts/fontin/Fontin-Regular.ttf";
+
 import { DatabaseContextProvider } from "./context/DatabaseContextProvider";
 import { CurrencyConverter } from "./components/CurrencyConverter";
 import ErrorBoundary from "./components/ErrorBoundary";

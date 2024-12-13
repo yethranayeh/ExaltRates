@@ -17,7 +17,7 @@ export function Currency({ name }: { name: CurrencyKey }) {
 					backgroundPosition: currencies.indexOf(name) * iconSize * -1
 				}}
 			/>
-			<span className='font-semibold'>{name}</span>
+			<span className='font-[FontinBold]'>{name}</span>
 		</div>
 	);
 }

@@ -1,3 +1,20 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@font-face {
+	font-family: "Fontin";
+	src: local("Fontin-Regular"), url("./assets/fonts/fontin/Fontin-Regular.ttf");
+}
+@font-face {
+	font-family: "FontinBold";
+	src: local("Fontin-Regular"), url("./assets/fonts/fontin/Fontin-Bold.ttf");
+}
+@font-face {
+	font-family: "FontinItalic";
+	src: local("Fontin-Regular"), url("./assets/fonts/fontin/Fontin-Italic.ttf");
+}
+@font-face {
+	font-family: "FontinSmallCaps";
+	src: local("Fontin-Regular"), url("./assets/fonts/fontin/Fontin-SmallCaps.ttf");
+}
