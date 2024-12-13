@@ -1,0 +1,13 @@
+{
+	"name": "Exalt Rates - Path of Exile 2 Currency Calculator",
+	"short_name": "Exalt Rates",
+	"icons": [
+		{ "src": "/android-chrome-192x192.png", "sizes": "192x192", "type": "image/png" },
+		{ "src": "/android-chrome-512x512.png", "sizes": "512x512", "type": "image/png" }
+	],
+	"theme_color": "#a38d6d",
+	"background_color": "#000",
+	"display": "standalone",
+	"start_url": "/",
+	"description": "Exalt Rates is a Path of Exile currency calculator to quickly find the conversion rates between Exalted Orbs, Chaos Orbs, and other in-game currencies."
+}
