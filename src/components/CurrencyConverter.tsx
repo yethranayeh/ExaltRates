@@ -16,7 +16,6 @@ import { Gears } from "./Gears";
 // TODO: refactor. needs more components, less complexity.
 export function CurrencyConverter() {
 	const db = useContext(DatabaseContext);
-	console.log("🚀 ~ CurrencyConverter ~ db:", db);
 
 	const [currencyMap, setCurrencyMap] = useState<RateDefinitions | null>(null);
 
@@ -69,7 +68,6 @@ export function CurrencyConverter() {
 				// TODO: on fetch success?
 			})
 			.catch((error) => {
-				console.log("err:", typeof error);
 				console.error("Error fetching latest document:", error);
 			});
 	}, []);

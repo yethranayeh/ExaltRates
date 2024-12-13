@@ -15,11 +15,11 @@ function App() {
 		<div className='flex flex-col gap-4 min-h-screen'>
 			<Header />
 			<div className='flex-1 overflow-x-hidden'>
-				<AuthGuard>
-					<ErrorBoundary>
+				<ErrorBoundary>
+					<AuthGuard>
 						<CurrencyConverter />
-					</ErrorBoundary>
-				</AuthGuard>
+					</AuthGuard>
+				</ErrorBoundary>
 			</div>
 			<Footer />
 		</div>
