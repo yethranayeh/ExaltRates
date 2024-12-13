@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react";
+import { useCallback, useContext, useEffect, useState } from "react";
 import { DatabaseContext } from "../context/DatabaseContext";
 import { query, orderBy, limit, getDocs, collection } from "firebase/firestore";
 import { convert } from "../utils/convert";
@@ -7,16 +7,46 @@ import { Currency } from "./Currency";
 import { CurrencyInputs } from "./CurrencyInputs";
 import { currencies } from "../constant";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "./shadcn/Accordion";
+import clsx from "clsx";
+import { AmountDisplay } from "./AmountDisplay";
+import { Toggle } from "./shadcn/Toggle";
+import { CheckCheck, Circle, CircleCheck } from "lucide-react";
 
 export function CurrencyConverter() {
 	const db = useContext(DatabaseContext);
 	const [currencyMap, setCurrencyMap] = useState<RateDefinitions | null>(null);
 
 	const [fromVal, setFromVal] = useState("");
-	const [from, setFrom] = useState<CurrencyKey>("Exalted Orb");
+	const [from, setFrom] = useState<CurrencyKey | "">("Exalted Orb");
+
 	const [toVal, setToVal] = useState("");
-	const [to, setTo] = useState<CurrencyKey>("Mirror of Kalandra");
+	const [to, setTo] = useState<typeof from>("Chaos Orb");
+
 	const [conversionRate, setConversionRate] = useState(0);
+
+	const [convertibleCurrencies, setConvertibleCurrencies] = useState<Array<CurrencyKey>>([]);
+	const [isErroredHidden, setIsErroredHidden] = useState(false);
+
+	const getValueChangeHandler = useCallback(
+		(left: typeof from, right: typeof from, leftSetter: typeof setFromVal, rightSetter: typeof setFromVal) =>
+			(v: string) => {
+				leftSetter(v);
+
+				if (v && from && to && currencyMap) {
+					const converted = convert(left as CurrencyKey, right as CurrencyKey, currencyMap);
+					if (converted == null) {
+						rightSetter("-1");
+					} else {
+						const ratioed = parseFloat(v) * converted;
+
+						rightSetter(ratioed.toFixed(2));
+					}
+				} else {
+					rightSetter("");
+				}
+			},
+		[from, to, currencyMap]
+	);
 
 	useEffect(() => {
 		const fetchLatestDocument = async () => {
@@ -38,9 +68,20 @@ export function CurrencyConverter() {
 	}, []);
 
 	useEffect(() => {
-		if (from && to && currencyMap) {
-			const conversionRate = convert(from, to, currencyMap);
-			setConversionRate(conversionRate);
+		if (from && currencyMap) {
+			if (to) {
+				const conversionRate = convert(from, to, currencyMap);
+				setConversionRate(conversionRate ?? -1);
+			}
+
+			const validCurrencies: Array<CurrencyKey> = [];
+			for (const currency of currencies.filter((c) => c !== from)) {
+				const rate = convert(from, currency, currencyMap);
+				if (rate != null) {
+					validCurrencies.push(currency);
+				}
+			}
+			setConvertibleCurrencies(validCurrencies);
 		}
 	}, [from, to, currencyMap]);
 
@@ -50,75 +91,73 @@ export function CurrencyConverter() {
 	}
 
 	return (
-		<div className='w-full flex justify-center '>
+		<div className='w-full flex justify-center pt-2'>
 			<div className='flex flex-col gap-5 container max-w-[500px]'>
 				<div>
 					{from && (
-						<div className='flex flex-row select-none items-center opacity-50 text-sm'>
+						<div className='flex flex-row select-none items-center text-primary-dark  text-sm'>
 							<span>1×</span>
 							<Currency name={from} />
 							<span className='ml-1'>equals</span>
 						</div>
 					)}
 					{to && (
-						<div className='flex flex-row select-none items-center text-lg'>
-							<span>{conversionRate.toFixed(2)}×</span> <Currency name={to} />
+						<div className={conversionRate === -1 ? "text-red-900" : undefined}>
+							<AmountDisplay rate={conversionRate} currencyName={to} />
 						</div>
 					)}
-					<p className='opacity-75 text-sm mt-2'>
-						Last update: {new Date(currencyMap.meta.createdAt).toLocaleString()}
+					<p className='text-primary-dark  italic text-sm mt-2'>
+						Last updated: {new Date(currencyMap.meta.createdAt).toLocaleString()}
 					</p>
 				</div>
 				<div className='flex flex-col gap-2'>
 					<CurrencyInputs
 						value={fromVal}
-						setValue={(v) => {
-							setFromVal(v);
-
-							if (v) {
-								const converted = parseFloat(v) * convert(from, to, currencyMap);
-
-								setToVal(converted.toFixed(2));
-							} else {
-								setToVal("");
-							}
-						}}
+						setValue={getValueChangeHandler(from, to, setFromVal, setToVal)}
 						currency={from}
 						setCurrency={setFrom}
 						currencies={currencies}
 					/>
 					<CurrencyInputs
+						disabled={conversionRate === -1}
 						value={toVal}
-						setValue={(v) => {
-							setToVal(v);
-
-							if (v) {
-								const converted = parseFloat(v) * convert(to, from, currencyMap);
-								setFromVal(converted.toFixed(2));
-							} else {
-								setFromVal("");
-							}
-						}}
+						setValue={getValueChangeHandler(to, from, setToVal, setFromVal)}
 						currency={to}
-						setCurrency={setTo}
-						currencies={currencies.filter((c) => c !== from)}
+						setCurrency={(v) => {
+							setTo(v);
+							setToVal("");
+						}}
+						currencies={(isErroredHidden ? convertibleCurrencies : currencies).filter((c) => c !== from)}
 					/>
 				</div>
-				<Accordion type='single' collapsible>
-					<AccordionItem value='all'>
-						<AccordionTrigger>Show All Currencies</AccordionTrigger>
-						<AccordionContent>
-							{currencies
-								.filter((c) => c !== from && c !== to)
-								.map((c) => (
-									<div key={c} className='flex flex-row select-none items-center text-lg'>
-										<span>{fromVal ? (convert(from, c, currencyMap) * parseFloat(fromVal)).toFixed(2) : 0}×</span>{" "}
-										<Currency name={c} />
-									</div>
-								))}
-						</AccordionContent>
-					</AccordionItem>
-				</Accordion>
+				<Toggle pressed={isErroredHidden} onPressedChange={setIsErroredHidden} className='w-max'>
+					{isErroredHidden ? <CircleCheck /> : <Circle />}
+					Hide Currencies with No Data
+				</Toggle>
+				{from && (
+					<Accordion type='single' collapsible>
+						<AccordionItem value='all'>
+							<AccordionTrigger>Other Currencies</AccordionTrigger>
+							<AccordionContent>
+								{/* TODO: Refactor. hard to read */}
+								{(isErroredHidden ? convertibleCurrencies : currencies)
+									.filter((c) => c !== from && c !== to)
+									.map((c) => {
+										const converted = convert(from, c, currencyMap);
+
+										return (
+											<div key={c} className={converted == null ? "text-red-900 opacity-50" : undefined}>
+												<AmountDisplay
+													rate={fromVal ? (converted ? converted * parseFloat(fromVal) : -1) : 0}
+													currencyName={c}
+												/>
+											</div>
+										);
+									})}
+							</AccordionContent>
+						</AccordionItem>
+					</Accordion>
+				)}
 			</div>
 		</div>
 	);

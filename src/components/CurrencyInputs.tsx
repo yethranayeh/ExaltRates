@@ -6,6 +6,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from ".
 import { Input } from "./shadcn/Input";
 
 type Props = {
+	disabled?: boolean;
 	value: string;
 	setValue: (v: string) => void;
 	currency: CurrencyKey | "";
@@ -13,9 +14,10 @@ type Props = {
 	currencies: typeof currencies | Array<CurrencyKey>;
 };
 
-export const CurrencyInputs = ({ value, setValue, currency, setCurrency, currencies }: Props) => (
+export const CurrencyInputs = ({ disabled, value, setValue, currency, setCurrency, currencies }: Props) => (
 	<div className='flex w-full max-w-[360px]'>
 		<Input
+			disabled={disabled}
 			value={value}
 			onChange={(e) => {
 				const val = e.target.value;
@@ -23,7 +25,7 @@ export const CurrencyInputs = ({ value, setValue, currency, setCurrency, currenc
 					setValue(val);
 				}
 			}}
-			className='min-h-[40px] w-[70px] border-r-0 rounded-r-none'
+			className='min-h-[40px] max-w-[100px] border-r-0 rounded-r-none'
 		/>
 		<Select value={currency} onValueChange={(v) => setCurrency(v as CurrencyKey)}>
 			<SelectTrigger className='w-full rounded-l-none'>
