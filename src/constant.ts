@@ -1,0 +1,22 @@
+export const currencies = [
+	"Arcanist's Etcher",
+	"Armourer's Scrap",
+	"Artificer's Orb",
+	"Blacksmith's Whetstone",
+	"Chaos Orb",
+	"Divine Orb",
+	"Exalted Orb",
+	"Gemcutter's Prism",
+	"Glassblower's Bauble",
+	"Greater Jeweller's Orb",
+	"Lesser Jeweller's Orb",
+	"Mirror of Kalandra",
+	"Orb of Alchemy",
+	"Orb of Annulment",
+	"Orb of Augmentation",
+	"Orb of Chance",
+	"Orb of Transmutation",
+	"Perfect Jeweller's Orb",
+	"Regal Orb",
+	"Vaal Orb"
+] as const;
