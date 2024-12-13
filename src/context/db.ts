@@ -7,7 +7,8 @@ const firebaseConfig = {
 	projectId: "exaltrates",
 	storageBucket: "exaltrates.firebasestorage.app",
 	messagingSenderId: "812815824984",
-	appId: "1:812815824984:web:1545a696ee80527aadb22d"
+	appId: "1:812815824984:web:1545a696ee80527aadb22d",
+	measurementId: "G-C7EKBYFMGM"
 };
 
 const app = initializeApp(firebaseConfig);
