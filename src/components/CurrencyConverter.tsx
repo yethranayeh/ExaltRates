@@ -7,10 +7,10 @@ import { Currency } from "./Currency";
 import { CurrencyInputs } from "./CurrencyInputs";
 import { currencies } from "../constant";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "./shadcn/Accordion";
-import clsx from "clsx";
+
 import { AmountDisplay } from "./AmountDisplay";
 import { Toggle } from "./shadcn/Toggle";
-import { CheckCheck, Circle, CircleCheck } from "lucide-react";
+import { Circle, CircleCheck } from "lucide-react";
 
 export function CurrencyConverter() {
 	const db = useContext(DatabaseContext);
@@ -91,7 +91,7 @@ export function CurrencyConverter() {
 	}
 
 	return (
-		<div className='w-full flex justify-center pt-2'>
+		<div className='w-full flex justify-center px-3'>
 			<div className='flex flex-col gap-5 container max-w-[500px]'>
 				<div>
 					{from && (
