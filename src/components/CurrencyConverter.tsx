@@ -10,17 +10,13 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "./
 
 import { AmountDisplay } from "./AmountDisplay";
 import { Toggle } from "./shadcn/Toggle";
-import { AlertCircle, Circle, CircleCheck } from "lucide-react";
+import { Circle, CircleCheck } from "lucide-react";
 import { Gears } from "./Gears";
-import { Alert, AlertDescription, AlertTitle } from "./shadcn/Alert";
-import clsx from "clsx";
 
 // TODO: refactor. needs more components, less complexity.
 export function CurrencyConverter() {
 	const db = useContext(DatabaseContext);
-
-	const [isLoading, setIsLoading] = useState(true);
-	const [dbError, setDbError] = useState("");
+	console.log("🚀 ~ CurrencyConverter ~ db:", db);
 
 	const [currencyMap, setCurrencyMap] = useState<RateDefinitions | null>(null);
 
@@ -75,12 +71,6 @@ export function CurrencyConverter() {
 			.catch((error) => {
 				console.log("err:", typeof error);
 				console.error("Error fetching latest document:", error);
-				if (typeof error === "string" || error?.message) {
-					setDbError(error?.message || error);
-				}
-			})
-			.finally(() => {
-				setIsLoading(false);
 			});
 	}, []);
 
@@ -103,21 +93,7 @@ export function CurrencyConverter() {
 	}, [from, to, currencyMap]);
 
 	if (currencyMap == null) {
-		return (
-			<div className={clsx("flex flex-col m-auto items-center", isLoading ? "loading" : undefined)}>
-				{dbError && (
-					<Alert variant='destructive' className='w-full max-w-[450px] z-50 bg-black'>
-						<AlertCircle className='h-4 w-4' />
-						<AlertTitle>Error</AlertTitle>
-						<AlertDescription>
-							<p>There was an error while retrieving currency rates.</p>
-							<p>{dbError}</p>
-						</AlertDescription>
-					</Alert>
-				)}
-				<Gears />
-			</div>
-		);
+		return <Gears />;
 	}
 
 	return (

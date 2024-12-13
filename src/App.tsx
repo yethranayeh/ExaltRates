@@ -1,7 +1,10 @@
 import "./index.css";
+import "./assets/fonts/fontin/Fontin-Bold.ttf";
+import "./assets/fonts/fontin/Fontin-Italic.ttf";
 import "./assets/fonts/fontin/Fontin-Regular.ttf";
+import "./assets/fonts/fontin/Fontin-SmallCaps.ttf";
 
-import { DatabaseContextProvider } from "./context/DatabaseContextProvider";
+import { AuthGuard } from "./utils/AuthGuard";
 import { Header } from "./components/Header";
 import { CurrencyConverter } from "./components/CurrencyConverter";
 import { Footer } from "./components/Footer";
@@ -12,11 +15,11 @@ function App() {
 		<div className='flex flex-col gap-4 min-h-screen'>
 			<Header />
 			<div className='flex-1 overflow-x-hidden'>
-				<ErrorBoundary>
-					<DatabaseContextProvider>
+				<AuthGuard>
+					<ErrorBoundary>
 						<CurrencyConverter />
-					</DatabaseContextProvider>
-				</ErrorBoundary>
+					</ErrorBoundary>
+				</AuthGuard>
 			</div>
 			<Footer />
 		</div>
