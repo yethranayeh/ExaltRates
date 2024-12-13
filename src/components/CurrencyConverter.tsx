@@ -130,7 +130,17 @@ export function CurrencyConverter() {
 						currencies={(isErroredHidden ? convertibleCurrencies : currencies).filter((c) => c !== from)}
 					/>
 				</div>
-				<Toggle pressed={isErroredHidden} onPressedChange={setIsErroredHidden} className='w-max'>
+				<Toggle
+					pressed={isErroredHidden}
+					onPressedChange={(pressed) => {
+						setIsErroredHidden(pressed);
+						if (pressed) {
+							if (!convertibleCurrencies.includes(to as CurrencyKey)) {
+								setTo(convertibleCurrencies[0]);
+							}
+						}
+					}}
+					className='w-max'>
 					{isErroredHidden ? <CircleCheck /> : <Circle />}
 					Hide Currencies with No Data
 				</Toggle>
@@ -139,6 +149,10 @@ export function CurrencyConverter() {
 						<AccordionItem value='all'>
 							<AccordionTrigger>Other Currencies</AccordionTrigger>
 							<AccordionContent>
+								<span className='italic text-sm text-primary-dark opacity-75 mb-2 block'>
+									Results are bound to {fromVal && `${fromVal}×`}
+									{from}
+								</span>
 								{/* TODO: Refactor. hard to read */}
 								{(isErroredHidden ? convertibleCurrencies : currencies)
 									.filter((c) => c !== from && c !== to)
