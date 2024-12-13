@@ -3,6 +3,10 @@
 
 name: Firebase PR Deploy
 on: pull_request
+
+env:
+  VITE_FIREBASE_API: true
+
 permissions:
   checks: write
   contents: read
@@ -11,6 +15,9 @@ jobs:
   build_and_preview:
     if: ${{ github.event.pull_request.head.repo.full_name == github.repository }}
     runs-on: ubuntu-latest
+    env:
+      VITE_FIREBASE_API: true
+
     steps:
       - uses: actions/checkout@v4
       - run: npm run build
