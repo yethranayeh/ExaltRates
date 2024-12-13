@@ -115,7 +115,15 @@ export function CurrencyConverter() {
 						value={fromVal}
 						setValue={getValueChangeHandler(from, to, setFromVal, setToVal)}
 						currency={from}
-						setCurrency={setFrom}
+						setCurrency={(c) => {
+							if (to === c) {
+								const nextAvailableCurrency = isErroredHidden
+									? convertibleCurrencies.filter((v) => v !== c)[0]
+									: currencies.filter((v) => v !== c)[0];
+								setTo(nextAvailableCurrency);
+							}
+							setFrom(c);
+						}}
 						currencies={currencies}
 					/>
 					<CurrencyInputs
