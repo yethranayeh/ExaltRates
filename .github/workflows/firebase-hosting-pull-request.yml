@@ -3,9 +3,8 @@
 
 name: Firebase PR Deploy
 on: pull_request
-
 env:
-  VITE_FIREBASE_API: true
+  VITE_FIREBASE_API: ${{ secrets.VITE_FIREBASE_API }}
 
 permissions:
   checks: write
@@ -16,7 +15,7 @@ jobs:
     if: ${{ github.event.pull_request.head.repo.full_name == github.repository }}
     runs-on: ubuntu-latest
     env:
-      VITE_FIREBASE_API: true
+      VITE_FIREBASE_API: ${{ secrets.VITE_FIREBASE_API }}
 
     steps:
       - uses: actions/checkout@v4
