@@ -2,9 +2,9 @@ import "./index.css";
 import "./assets/fonts/fontin/Fontin-Regular.ttf";
 
 import { DatabaseContextProvider } from "./context/DatabaseContextProvider";
+import { Header } from "./components/Header";
 import { CurrencyConverter } from "./components/CurrencyConverter";
 import ErrorBoundary from "./components/ErrorBoundary";
-import { Header } from "./components/Header";
 
 function App() {
 	return (
