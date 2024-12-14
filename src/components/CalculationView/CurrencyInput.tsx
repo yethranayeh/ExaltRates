@@ -1,8 +1,24 @@
 import type { ChangeEvent } from "react";
-import { useCallback } from "react";
+import { useCallback, useContext } from "react";
+import { Star, StarOff } from "lucide-react";
 
 import { Currency } from "../Currency";
 import { Input } from "../shadcn/Input";
+import { StorageContext } from "../../context/StorageContext";
+
+function StarButton({ currency }: { currency: CurrencyKey }) {
+	const { setPreferences, preferences } = useContext(StorageContext);
+	const isSelected = preferences.starred === currency;
+
+	return (
+		<button
+			title={`Select "${currency}" on page load`}
+			className='ml-10'
+			onClick={() => setPreferences(isSelected ? { starred: null } : { starred: currency })}>
+			{isSelected ? <StarOff className='w-4 h-4' /> : <Star className='w-4 h-4' />}
+		</button>
+	);
+}
 
 type Props = {
 	value: string;
@@ -36,6 +52,8 @@ export function CurrencyInput({ value, setValue, selected }: Props) {
 			<span className='ml-[-5px]'>×</span>
 			<Currency name={selected} />
 			<span> equals</span>
+
+			<StarButton currency={selected} />
 		</div>
 	);
 }

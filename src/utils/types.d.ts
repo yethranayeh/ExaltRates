@@ -1,1 +1,1 @@
-type Preference = { pinned: null | { primary: CurrencyKey; secondary: CurrencyKey } };
+type Preference = { pinned: null | { primary: CurrencyKey; secondary: CurrencyKey }; starred: CurrencyKey | null };

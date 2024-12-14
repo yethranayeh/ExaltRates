@@ -1,6 +1,6 @@
 const cacheKey = "currencyMapCache";
 const preferencesKey = "preferences";
-const initialPreferences: Preference = { pinned: null };
+const initialPreferences: Preference = { pinned: null, starred: null };
 
 export function getCache() {
 	const cacheData = localStorage.getItem(cacheKey);

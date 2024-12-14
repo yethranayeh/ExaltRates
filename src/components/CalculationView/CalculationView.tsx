@@ -3,6 +3,7 @@ import clsx from "clsx";
 
 import { convert } from "../../utils/convert";
 import { CurrencyMapContext } from "../../context/CurrencyMapContext";
+import { StorageContext } from "../../context/StorageContext";
 
 import { Gears } from "../Gears";
 import { CurrencySelection } from "./CurrencySelection";
@@ -13,7 +14,8 @@ import { HiddenDataInfo } from "./HiddenDataInfo";
 import { currencies } from "../../constant";
 
 export function CalculationView() {
-	const [selected, setSelected] = useState<CurrencyKey | "">("");
+	const { preferences } = useContext(StorageContext);
+	const [selected, setSelected] = useState<CurrencyKey | "">(preferences.starred ?? "");
 	const [value, setValue] = useState("");
 	const currencyMap = useContext(CurrencyMapContext);
 
