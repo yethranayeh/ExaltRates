@@ -1,3 +1,4 @@
+import { memo } from "react";
 import clsx from "clsx";
 
 import { CurrencyIcon } from "../CurrencyIcon";
@@ -8,8 +9,14 @@ type Props = {
 	setSelected: SetStateFn<Props["selected"]>;
 };
 
-export const CurrencySelection = ({ selected, setSelected }: Props) => (
-	<section className='lg:row-span-2 grid grid-cols-10 md:grid-cols-4 lg:grid-cols-2 xl:grid-cols-3 w-max gap-1 h-max border-primary-darker border-b pb-2 lg:border-b-0 lg:pb-0 lg:border-r lg:border-1  lg:pr-2'>
+export const Component = ({ selected, setSelected }: Props) => (
+	<section
+		className={clsx(
+			"w-max grid grid-cols-10 gap-y-1 gap-x-0 h-max pb-4 border-primary-darker border-b",
+			"md:grid-cols-4 md:gap-2",
+			"lg:grid-cols-2 lg:row-span-2 lg:border-b-0 lg:pb-0 lg:pr-4 lg:border-r lg:border-1 ",
+			"xl:grid-cols-3"
+		)}>
 		{currencies.map((c, index) => (
 			<button
 				key={c}
@@ -20,8 +27,10 @@ export const CurrencySelection = ({ selected, setSelected }: Props) => (
 				)}
 				onClick={() => setSelected(c)}>
 				<CurrencyIcon index={index} />
-				<span className='hidden md:block'>{c}</span>
+				<span className='hidden text-sm md:block lg:text-md xl:text-lg'>{c}</span>
 			</button>
 		))}
 	</section>
 );
+
+export const CurrencySelection = memo(Component);

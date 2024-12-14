@@ -1,4 +1,6 @@
+import { memo } from "react";
 import { InfoIcon } from "lucide-react";
+
 import {
 	Dialog,
 	DialogClose,
@@ -9,11 +11,10 @@ import {
 	DialogTitle,
 	DialogTrigger
 } from "../shadcn/Dialog";
-
 import { AmountDisplay } from "../AmountDisplay";
 import { Button } from "../shadcn/Button";
 
-export const HiddenDataInfo = () => (
+const Component = () => (
 	<Dialog>
 		<DialogTrigger
 			className='flex gap-1 items-center text-primary-dark opacity-50 text-sm italic select-none cursor-pointer hover:opacity-75 hover:underline'
@@ -45,3 +46,5 @@ export const HiddenDataInfo = () => (
 		</DialogContent>
 	</Dialog>
 );
+
+export const HiddenDataInfo = memo(Component);

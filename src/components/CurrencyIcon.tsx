@@ -1,16 +1,21 @@
-const iconSize = 34;
+import { memo } from "react";
+
 const defaultFileSize = 108;
 const sheetWidth = 2160;
-const relativeSize = (iconSize / defaultFileSize) * sheetWidth;
 
-export const CurrencyIcon = ({ index }: { index: number }) => (
+function getRelativeSize(size: number) {
+	return (size / defaultFileSize) * sheetWidth;
+}
+
+const Component = ({ index, size = 34 }: { index: number; size?: number }) => (
 	<div
 		style={{
-			width: iconSize,
-			height: iconSize,
+			width: size,
+			height: size,
 			backgroundImage: "url(currency/sheet.png)",
-			backgroundSize: relativeSize,
-			backgroundPosition: index * iconSize * -1
+			backgroundSize: getRelativeSize(size),
+			backgroundPosition: index * size * -1
 		}}
 	/>
 );
+export const CurrencyIcon = memo(Component);

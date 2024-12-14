@@ -1,7 +1,8 @@
-import { useMemo, useState } from "react";
+import { useContext, useMemo, useState } from "react";
+import clsx from "clsx";
 
-import { useCurrencyMapData } from "../../hooks/useCurrencyMap";
 import { convert } from "../../utils/convert";
+import { CurrencyMapContext } from "../../context/CurrencyMapContext";
 
 import { Gears } from "../Gears";
 import { CurrencySelection } from "./CurrencySelection";
@@ -14,7 +15,7 @@ import { currencies } from "../../constant";
 export function CalculationView() {
 	const [selected, setSelected] = useState<CurrencyKey | "">("");
 	const [value, setValue] = useState("");
-	const currencyMap = useCurrencyMapData();
+	const currencyMap = useContext(CurrencyMapContext);
 
 	const convertedResults = useMemo(() => {
 		if (!selected || !currencyMap) {
@@ -39,24 +40,30 @@ export function CalculationView() {
 	}, [selected, value, currencyMap]);
 
 	if (currencyMap == null) {
-		return <Gears />;
+		return (
+			<div className='flex-1'>
+				<Gears />
+			</div>
+		);
 	}
 
 	return (
-		<div className='w-full flex justify-center px-4'>
-			<div className='grid gap-4 p-4 lg:grid-cols-2 lg:auto-rows-min lg:gap-6'>
+		<div className='w-full flex flex-1 overflow-x-hidden justify-center px-4'>
+			<div className={clsx("flex flex-col gap-4", "lg:gap-6 lg:flex-row")}>
 				<CurrencySelection selected={selected} setSelected={setSelected} />
 
-				{selected ? (
-					<CurrencyInput value={value} setValue={setValue} selected={selected} />
-				) : (
-					<p>Please select a currency</p>
-				)}
+				<div className='flex flex-col gap-4 min-w-[340px]'>
+					{selected ? (
+						<CurrencyInput value={value} setValue={setValue} selected={selected} />
+					) : (
+						<p>Please select a currency</p>
+					)}
 
-				<div className='min-h-[202px] flex flex-col justify-between gap-2'>
-					{selected && <CalculationResults results={convertedResults} />}
+					<div className='min-h-[230px] flex flex-col justify-between gap-2'>
+						{selected && <CalculationResults primary={selected} results={convertedResults} />}
 
-					{selected && convertedResults.length < currencies.length - 2 && <HiddenDataInfo />}
+						{selected && convertedResults.length < currencies.length - 2 && <HiddenDataInfo />}
+					</div>
 				</div>
 			</div>
 		</div>

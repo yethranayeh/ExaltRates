@@ -1,6 +1,8 @@
 import { useContext, useEffect, useState } from "react";
 import { query, orderBy, limit, getDocs, collection } from "firebase/firestore";
+
 import { DatabaseContext } from "../context/DatabaseContext";
+import { setCache } from "../utils/storage";
 
 export function useCurrencyMapData() {
 	const db = useContext(DatabaseContext);
@@ -15,7 +17,11 @@ export function useCurrencyMapData() {
 			const querySnapshot = await getDocs(q);
 
 			// FIXME: do I have to loop a .limit(1) data?
-			querySnapshot.forEach((doc) => setCurrencyMap(doc.data() as RateDefinitions));
+			querySnapshot.forEach((doc) => {
+				const data = doc.data() as RateDefinitions;
+				setCurrencyMap(data);
+				setCache(data);
+			});
 		};
 
 		fetchLatestDocument()
