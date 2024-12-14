@@ -45,9 +45,16 @@ export function CurrencySelection({ value, setValue, selected, setSelected }: Pr
 					</button>
 				))}
 			</div>
+
 			{selected ? (
 				<div className='flex items-center gap-1 w-full'>
-					<Input value={value} className='w-[60px] max-w-[60px]' inputMode='decimal' onChange={handleValueChange} />
+					{/* FIXME: Input shrinks when longer names are selected. e.g. Whetstone */}
+					<Input
+						value={value}
+						className='min-w-[60px] w-[60px] max-w-[60px]'
+						inputMode='decimal'
+						onChange={handleValueChange}
+					/>
 					<span className='ml-[-5px]'>×</span>
 					<Currency name={selected} />
 					<span> equals</span>
