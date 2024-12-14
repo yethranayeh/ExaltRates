@@ -31,7 +31,7 @@ export function CurrencySelection({ value, setValue, selected, setSelected }: Pr
 		}
 	}, []);
 	return (
-		<section className='flex flex-col gap-4 items-center'>
+		<section className='flex flex-col gap-4 items-center w-min'>
 			<div className='grid grid-cols-10 w-max'>
 				{currencies.map((c, index) => (
 					<button

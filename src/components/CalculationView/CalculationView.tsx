@@ -43,7 +43,7 @@ export function CalculationView() {
 
 	return (
 		<div className='w-full flex justify-center px-4'>
-			<div className='min-w-[300px] w-full max-w-[500px] flex flex-col gap-4'>
+			<div className='min-w-[300px] w-full max-w-[500px] flex flex-col gap-4 items-center w-min'>
 				<CurrencySelection value={value} setValue={setValue} selected={selected} setSelected={setSelected} />
 
 				{selected && <CalculationResults results={convertedResults} />}
