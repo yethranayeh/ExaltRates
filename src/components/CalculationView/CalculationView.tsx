@@ -1,5 +1,4 @@
 import { useMemo, useState } from "react";
-import { InfoIcon } from "lucide-react";
 
 import { useCurrencyMapData } from "../../hooks/useCurrencyMap";
 import { convert } from "../../utils/convert";
@@ -8,6 +7,7 @@ import { Gears } from "../Gears";
 import { CurrencySelection } from "./CurrencySelection";
 import { CalculationResults } from "./CalculationResults";
 import { CurrencyInput } from "./CurrencyInput";
+import { HiddenDataInfo } from "./HiddenDataInfo";
 
 import { currencies } from "../../constant";
 
@@ -53,15 +53,10 @@ export function CalculationView() {
 					<p>Please select a currency</p>
 				)}
 
-				<div className='min-h-[300px]'>
+				<div className='min-h-[202px] flex flex-col justify-between gap-2'>
 					{selected && <CalculationResults results={convertedResults} />}
 
-					{selected && convertedResults.length < currencies.length - 2 && (
-						<div className='flex gap-1 items-center text-primary-dark opacity-50 text-sm italic'>
-							<InfoIcon className='w-5 h-5' />
-							<p>Currencies with no data are hidden</p>
-						</div>
-					)}
+					{selected && convertedResults.length < currencies.length - 2 && <HiddenDataInfo />}
 				</div>
 			</div>
 		</div>
