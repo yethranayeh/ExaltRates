@@ -7,6 +7,7 @@ import { convert } from "../../utils/convert";
 import { Gears } from "../Gears";
 import { CurrencySelection } from "./CurrencySelection";
 import { CalculationResults } from "./CalculationResults";
+import { CurrencyInput } from "./CurrencyInput";
 
 import { currencies } from "../../constant";
 
@@ -43,17 +44,25 @@ export function CalculationView() {
 
 	return (
 		<div className='w-full flex justify-center px-4'>
-			<div className='min-w-[300px] w-full max-w-[500px] flex flex-col gap-4 items-center w-min'>
-				<CurrencySelection value={value} setValue={setValue} selected={selected} setSelected={setSelected} />
+			<div className='grid gap-4 p-4 lg:grid-cols-2 lg:auto-rows-min lg:gap-6'>
+				<CurrencySelection selected={selected} setSelected={setSelected} />
 
-				{selected && <CalculationResults results={convertedResults} />}
-
-				{selected && convertedResults.length < currencies.length - 2 && (
-					<div className='flex gap-1 items-center text-primary-dark opacity-50 text-sm italic'>
-						<InfoIcon className='w-5 h-5' />
-						<p>Currencies with no data are hidden</p>
-					</div>
+				{selected ? (
+					<CurrencyInput value={value} setValue={setValue} selected={selected} />
+				) : (
+					<p>Please select a currency</p>
 				)}
+
+				<div className='min-h-[300px]'>
+					{selected && <CalculationResults results={convertedResults} />}
+
+					{selected && convertedResults.length < currencies.length - 2 && (
+						<div className='flex gap-1 items-center text-primary-dark opacity-50 text-sm italic'>
+							<InfoIcon className='w-5 h-5' />
+							<p>Currencies with no data are hidden</p>
+						</div>
+					)}
+				</div>
 			</div>
 		</div>
 	);

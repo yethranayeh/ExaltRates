@@ -1,67 +1,27 @@
-import type { ChangeEvent } from "react";
-
-import { useCallback } from "react";
 import clsx from "clsx";
 
 import { CurrencyIcon } from "../CurrencyIcon";
 import { currencies } from "../../constant";
-import { Input } from "../shadcn/Input";
-import { Currency } from "../Currency";
 
 type Props = {
-	value: string;
-	setValue: SetStateFn<string>;
 	selected: CurrencyKey | "";
 	setSelected: SetStateFn<Props["selected"]>;
 };
 
-export function CurrencySelection({ value, setValue, selected, setSelected }: Props) {
-	const handleValueChange = useCallback((e: ChangeEvent<HTMLInputElement>) => {
-		const numberRegex = /[+-]?(\d+([.]\d*)?|[.]\d+)/;
-
-		const nextValue = e.target.value.replace(",", ".");
-
-		console.log({ nextValue, test: numberRegex.test(nextValue) });
-
-		const isValidValue = nextValue === "" || numberRegex.test(nextValue);
-		const hasMultiplePeriods = (nextValue.match(/\./g)?.length ?? 0) > 1;
-
-		if (isValidValue && !hasMultiplePeriods) {
-			setValue(nextValue);
-		}
-	}, []);
-	return (
-		<section className='flex flex-col gap-4 items-center w-min'>
-			<div className='grid grid-cols-10 w-max'>
-				{currencies.map((c, index) => (
-					<button
-						key={c}
-						className={clsx(
-							"hover:opacity-100 transition-opacity cursor-pointer",
-							selected === c ? "opacity-100" : "opacity-50"
-						)}
-						onClick={() => setSelected(c)}>
-						<CurrencyIcon index={index} />
-					</button>
-				))}
-			</div>
-
-			{selected ? (
-				<div className='flex items-center gap-1 w-full'>
-					{/* FIXME: Input shrinks when longer names are selected. e.g. Whetstone */}
-					<Input
-						value={value}
-						className='min-w-[60px] w-[60px] max-w-[60px]'
-						inputMode='decimal'
-						onChange={handleValueChange}
-					/>
-					<span className='ml-[-5px]'>×</span>
-					<Currency name={selected} />
-					<span> equals</span>
-				</div>
-			) : (
-				<div>Please select currency</div>
-			)}
-		</section>
-	);
-}
+export const CurrencySelection = ({ selected, setSelected }: Props) => (
+	<section className='lg:row-span-2 grid grid-cols-10 md:grid-cols-4 lg:grid-cols-2 xl:grid-cols-3 w-max gap-1 h-max border-primary-darker border-b pb-2 lg:border-b-0 lg:pb-0 lg:border-r lg:border-1  lg:pr-2'>
+		{currencies.map((c, index) => (
+			<button
+				key={c}
+				title={c}
+				className={clsx(
+					"hover:opacity-100 transition-all cursor-pointer flex items-center",
+					selected === c ? "opacity-100 scale-110 lg:scale-105" : "opacity-50"
+				)}
+				onClick={() => setSelected(c)}>
+				<CurrencyIcon index={index} />
+				<span className='hidden md:block'>{c}</span>
+			</button>
+		))}
+	</section>
+);
