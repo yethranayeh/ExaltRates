@@ -28,7 +28,7 @@ class ErrorBoundary extends Component<Props, State> {
 	public render() {
 		if (this.state.hasError) {
 			return (
-				<div className='w-full h-screen grid place-items-center'>
+				<div className='w-full h-screen grid place-items-center px-4'>
 					<Alert variant='destructive' className='w-full max-w-[450px]'>
 						<AlertCircle className='h-4 w-4' />
 						<AlertTitle>Error</AlertTitle>

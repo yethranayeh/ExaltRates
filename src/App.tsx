@@ -6,7 +6,7 @@ import "./assets/fonts/fontin/Fontin-SmallCaps.ttf";
 
 import { AuthGuard } from "./utils/AuthGuard";
 import { Header } from "./components/Header";
-import { CurrencyConverter } from "./components/CurrencyConverter";
+import { CalculationView } from "./components/CalculationView";
 import { Footer } from "./components/Footer";
 import ErrorBoundary from "./components/ErrorBoundary";
 
@@ -17,7 +17,7 @@ function App() {
 			<div className='flex-1 overflow-x-hidden'>
 				<ErrorBoundary>
 					<AuthGuard>
-						<CurrencyConverter />
+						<CalculationView />
 					</AuthGuard>
 				</ErrorBoundary>
 			</div>
