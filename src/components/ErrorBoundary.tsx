@@ -25,6 +25,7 @@ class ErrorBoundary extends Component<Props, State> {
 		console.error("EXALT_RATES_ERR:", error, errorInfo);
 	}
 
+	// TODO: Custom children
 	public render() {
 		if (this.state.hasError) {
 			return (

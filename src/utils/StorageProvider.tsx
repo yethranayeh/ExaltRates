@@ -25,8 +25,13 @@ export function StorageProvider(props: PropsWithChildren) {
 			setCache: (data) => update("cache", data),
 			preferences: preferencesState,
 			setPreferences: (pref) => {
-				const newPrefs = { ...preferencesState, ...pref };
-				update("preference", newPrefs);
+				if (typeof pref === "function") {
+					const newPrefs = { ...preferencesState, ...pref(preferencesState) };
+					update("preference", newPrefs);
+				} else {
+					const newPrefs = { ...preferencesState, ...pref };
+					update("preference", newPrefs);
+				}
 			}
 		}),
 		[cacheState, preferencesState]

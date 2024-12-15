@@ -10,16 +10,16 @@ const buttonVariants = cva(
 			variant: {
 				default: "bg-primary-main text-primary-darker shadow hover:bg-primary-main/90",
 				destructive: "bg-red-900 text-red-900-foreground shadow-sm hover:bg-red-900/90",
-				outline: "border border-primary-darker bg-black shadow-sm hover:bg-accent hover:text-primary-light",
+				outline: "border border-primary-dark bg-black shadow-sm hover:bg-primary-darker hover:text-primary-light",
+				secondary: "bg-primary-dark border border-primary-darker text-primary-darker shadow-sm hover:bg-secondary/80",
 
 				// TODO: update colors
-				secondary: "bg-secondary text-secondary-foreground shadow-sm hover:bg-secondary/80",
 				ghost: "hover:bg-accent hover:text-accent-foreground",
 				link: "text-primary-main underline-offset-4 hover:underline"
 			},
 			size: {
 				default: "h-9 px-4 py-2",
-				sm: "h-8 rounded-md px-3 text-xs",
+				sm: "h-7 rounded-md px-3 text-xs",
 				lg: "h-10 rounded-md px-8",
 				icon: "h-9 w-9"
 			}

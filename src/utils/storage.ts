@@ -1,6 +1,10 @@
 const cacheKey = "currencyMapCache";
 const preferencesKey = "preferences";
-const initialPreferences: Preference = { pinned: null, starred: null };
+const initialPreferences: Preference = {
+	pinned: null,
+	starred: null,
+	hide: { colorInfo: false }
+};
 
 export function getCache() {
 	const cacheData = localStorage.getItem(cacheKey);
@@ -25,4 +29,9 @@ export function getPreferences() {
 
 if (!localStorage.getItem(preferencesKey)) {
 	setPreferences(initialPreferences);
+} else {
+	// Even if preferences exist, new additions to here will have to be considered. So, it is better to always write inital values on load, then overwrite with existing values.
+	const pref = getPreferences();
+
+	setPreferences({ ...initialPreferences, ...pref });
 }

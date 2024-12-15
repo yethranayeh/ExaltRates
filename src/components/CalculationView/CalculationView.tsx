@@ -10,7 +10,7 @@ import { Gears } from "../Gears";
 import { CurrencySelection } from "./CurrencySelection";
 import { CalculationResults } from "./CalculationResults";
 import { CurrencyInput } from "./CurrencyInput";
-import { HiddenDataInfo } from "./HiddenDataInfo";
+import { ColorInfo } from "./Informational/ColorInfo";
 import ErrorBoundary from "../ErrorBoundary";
 
 import { currencies } from "../../constant";
@@ -77,7 +77,7 @@ export function CalculationView() {
 							{selected && <CalculationResults primary={selected} results={results} />}
 
 							<div className='flex flex-col gap-2'>
-								{selected && results.conversions.length < currencies.length - 2 && <HiddenDataInfo />}
+								<ColorInfo />
 
 								<p className='flex items-center gap-1 text-primary-darker italic text-xs'>
 									<DatabaseBackup className='w-4 h-4' /> Last Updated:{" "}
