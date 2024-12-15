@@ -1,10 +1,10 @@
-import { useContext, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import { DatabaseBackup } from "lucide-react";
 import clsx from "clsx";
 
 import { convert } from "../../utils/convert";
-import { CurrencyMapContext } from "../../context/CurrencyMapContext";
-import { StorageContext } from "../../context/StorageContext";
+import { useStorage } from "../../hooks/useStorage";
+import { useCurrencyMapData } from "../../hooks/useCurrencyMap";
 
 import { Gears } from "../Gears";
 import { CurrencySelection } from "./CurrencySelection";
@@ -16,10 +16,10 @@ import ErrorBoundary from "../ErrorBoundary";
 import { currencies } from "../../constant";
 
 export function CalculationView() {
-	const { preferences } = useContext(StorageContext);
+	const { preferences } = useStorage();
 	const [selected, setSelected] = useState<CurrencyKey | "">(preferences.starred ?? "");
 	const [value, setValue] = useState(preferences.starred ? "1" : "");
-	const currencyMap = useContext(CurrencyMapContext);
+	const currencyMap = useCurrencyMapData();
 
 	const results = useMemo(() => {
 		const values: ConversionResults = { conversions: [], highestConfidence: 0 };
@@ -78,6 +78,7 @@ export function CalculationView() {
 
 							<div className='flex flex-col gap-2'>
 								{selected && results.conversions.length < currencies.length - 2 && <HiddenDataInfo />}
+
 								<p className='flex items-center gap-1 text-primary-darker italic text-xs'>
 									<DatabaseBackup className='w-4 h-4' /> Last Updated:{" "}
 									{new Date(currencyMap.meta.createdAt).toLocaleString()}

@@ -1,10 +1,10 @@
-import { useContext } from "react";
 import { PinOff } from "lucide-react";
 import clsx from "clsx";
 
 import { getCache } from "../../utils/storage";
 import { convert } from "../../utils/convert";
-import { StorageContext } from "../../context/StorageContext";
+import { useStorage } from "../../hooks/useStorage";
+
 import { CurrencyIcon } from "../CurrencyIcon";
 
 import { currencies } from "../../constant";
@@ -13,7 +13,7 @@ export function PinnedConversion() {
 	const {
 		setPreferences,
 		preferences: { pinned }
-	} = useContext(StorageContext);
+	} = useStorage();
 	const currencyMap = getCache();
 
 	if (!pinned || !currencyMap) {

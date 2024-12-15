@@ -1,11 +1,11 @@
-import { useContext, useEffect, useMemo, useState, type PropsWithChildren } from "react";
+import { useEffect, useMemo, useState, type PropsWithChildren } from "react";
 
 import { getCache, getPreferences, setCache, setPreferences } from "./storage";
 import { StorageContext } from "../context/StorageContext";
-import { CurrencyMapContext } from "../context/CurrencyMapContext";
+import { useCurrencyMapData } from "../hooks/useCurrencyMap";
 
 export function StorageProvider(props: PropsWithChildren) {
-	const currencyMap = useContext(CurrencyMapContext);
+	const currencyMap = useCurrencyMapData();
 	const [cacheState, setCacheState] = useState(getCache());
 	const [preferencesState, setPreferencesState] = useState(getPreferences());
 

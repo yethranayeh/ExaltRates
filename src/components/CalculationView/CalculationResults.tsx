@@ -1,15 +1,15 @@
-import { useContext } from "react";
 import { Pin, PinOff } from "lucide-react";
 import clsx from "clsx";
 
+import { useStorage } from "../../hooks/useStorage";
+
 import { AmountDisplay } from "../AmountDisplay";
-import { StorageContext } from "../../context/StorageContext";
 
 function PinButton({ primary, secondary }: { primary: CurrencyKey; secondary: CurrencyKey }) {
 	const {
 		setPreferences,
 		preferences: { pinned }
-	} = useContext(StorageContext);
+	} = useStorage();
 
 	const isCurrentlyPinned = pinned?.primary === primary && pinned?.secondary === secondary;
 
