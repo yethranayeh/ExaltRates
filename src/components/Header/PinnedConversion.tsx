@@ -20,7 +20,7 @@ export function PinnedConversion() {
 		return null;
 	}
 
-	const conversionRate = convert(pinned.primary, pinned.secondary, currencyMap);
+	const conversionRate = convert(pinned.primary, pinned.secondary, currencyMap).rate;
 
 	return (
 		<div className='flex select-none items-center text-primary-dark text-sm'>

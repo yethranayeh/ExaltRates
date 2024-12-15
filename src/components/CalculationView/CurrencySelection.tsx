@@ -26,7 +26,7 @@ export const Component = ({ selected, setSelected }: Props) => (
 				)}
 				onClick={() => setSelected(c)}>
 				<CurrencyIcon index={index} />
-				<span className='hidden text-sm md:block lg:text-md xl:text-lg'>{c}</span>
+				<span className='hidden text-sm md:block md:text-md lg:text-lg'>{c}</span>
 			</button>
 		))}
 	</section>

@@ -35,8 +35,6 @@ export function CurrencyInput({ value, setValue, selected }: Props) {
 
 		const nextValue = e.target.value.replace(",", ".");
 
-		console.log({ nextValue, test: numberRegex.test(nextValue) });
-
 		const isValidValue = nextValue === "" || numberRegex.test(nextValue);
 		const hasMultiplePeriods = (nextValue.match(/\./g)?.length ?? 0) > 1;
 
