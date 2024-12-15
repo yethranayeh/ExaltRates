@@ -1,5 +1,5 @@
-import { memo } from "react";
 import clsx from "clsx";
+import { memo } from "react";
 
 import { CurrencyIcon } from "../CurrencyIcon";
 import { currencies } from "../../constant";
@@ -14,8 +14,7 @@ export const Component = ({ selected, setSelected }: Props) => (
 		className={clsx(
 			"w-max grid grid-cols-10 gap-y-1 gap-x-0 h-max pb-4 border-primary-darker border-b",
 			"md:grid-cols-4 md:gap-2",
-			"lg:grid-cols-2 lg:row-span-2 lg:border-b-0 lg:pb-0 lg:pr-4 lg:border-r lg:border-1 ",
-			"xl:grid-cols-3"
+			"lg:grid-cols-2 lg:row-span-2 lg:border-b-0 lg:pb-0 lg:pr-4 lg:border-r lg:border-1 "
 		)}>
 		{currencies.map((c, index) => (
 			<button

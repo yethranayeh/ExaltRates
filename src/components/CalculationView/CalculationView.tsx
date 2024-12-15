@@ -1,4 +1,5 @@
 import { useContext, useMemo, useState } from "react";
+import { DatabaseBackup } from "lucide-react";
 import clsx from "clsx";
 
 import { convert } from "../../utils/convert";
@@ -16,7 +17,7 @@ import { currencies } from "../../constant";
 export function CalculationView() {
 	const { preferences } = useContext(StorageContext);
 	const [selected, setSelected] = useState<CurrencyKey | "">(preferences.starred ?? "");
-	const [value, setValue] = useState("");
+	const [value, setValue] = useState(preferences.starred ? "1" : "");
 	const currencyMap = useContext(CurrencyMapContext);
 
 	const convertedResults = useMemo(() => {
@@ -54,7 +55,7 @@ export function CalculationView() {
 			<div className={clsx("flex flex-col gap-4", "lg:gap-6 lg:flex-row")}>
 				<CurrencySelection selected={selected} setSelected={setSelected} />
 
-				<div className='flex flex-col gap-4 min-w-[340px]'>
+				<div className='flex flex-col gap-4 min-w-[390px]'>
 					{selected ? (
 						<CurrencyInput value={value} setValue={setValue} selected={selected} />
 					) : (
@@ -65,6 +66,10 @@ export function CalculationView() {
 						{selected && <CalculationResults primary={selected} results={convertedResults} />}
 
 						{selected && convertedResults.length < currencies.length - 2 && <HiddenDataInfo />}
+						<p className='flex items-center gap-1 text-primary-darker italic text-xs'>
+							<DatabaseBackup className='w-4 h-4' /> Last Updated:{" "}
+							{new Date(currencyMap.meta.createdAt).toLocaleString()}
+						</p>
 					</div>
 				</div>
 			</div>

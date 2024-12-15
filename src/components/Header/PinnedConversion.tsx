@@ -36,10 +36,8 @@ export function PinnedConversion() {
 			<button
 				title='Unpin conversion'
 				type='button'
-				className='text-primary-dark ml-2'
-				onClick={() => {
-					setPreferences({ pinned: null });
-				}}>
+				className='ml-2 text-primary-main hover:text-primary-light transition-colors'
+				onClick={() => setPreferences({ pinned: null })}>
 				<PinOff className='w-4 h-4' />
 			</button>
 		</div>

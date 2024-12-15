@@ -13,9 +13,12 @@ function StarButton({ currency }: { currency: CurrencyKey }) {
 	return (
 		<button
 			title={`Select "${currency}" on page load`}
-			className='ml-10'
 			onClick={() => setPreferences(isSelected ? { starred: null } : { starred: currency })}>
-			{isSelected ? <StarOff className='w-4 h-4' /> : <Star className='w-4 h-4' />}
+			{isSelected ? (
+				<StarOff className='w-4 h-4' />
+			) : (
+				<Star className='w-4 h-4 text-primary-dark hover:text-primary-main transition-colors' />
+			)}
 		</button>
 	);
 }
@@ -42,7 +45,8 @@ export function CurrencyInput({ value, setValue, selected }: Props) {
 		}
 	}, []);
 	return (
-		<div className='flex items-center gap-1 w-full h-9'>
+		<div className='flex items-center gap-1 w-full'>
+			<StarButton currency={selected} />
 			<Input
 				value={value}
 				className='min-w-[60px] w-[60px] max-w-[60px]'
@@ -50,10 +54,8 @@ export function CurrencyInput({ value, setValue, selected }: Props) {
 				onChange={handleValueChange}
 			/>
 			<span className='ml-[-5px]'>×</span>
-			<Currency name={selected} />
+			<Currency name={selected} IconProps={{ size: 26 }} />
 			<span> equals</span>
-
-			<StarButton currency={selected} />
 		</div>
 	);
 }

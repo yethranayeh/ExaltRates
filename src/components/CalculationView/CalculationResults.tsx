@@ -1,5 +1,6 @@
 import { useContext } from "react";
 import { Pin, PinOff } from "lucide-react";
+import clsx from "clsx";
 
 import { AmountDisplay } from "../AmountDisplay";
 import { StorageContext } from "../../context/StorageContext";
@@ -16,7 +17,10 @@ function PinButton({ primary, secondary }: { primary: CurrencyKey; secondary: Cu
 		<button
 			title={isCurrentlyPinned ? "Unpin" : "Pin to top"}
 			type='button'
-			className='text-primary-dark'
+			className={clsx(
+				"hover:text-primary-main transition-colors",
+				isCurrentlyPinned ? "text-primary-main" : "text-primary-dark"
+			)}
 			onClick={() => {
 				setPreferences(
 					isCurrentlyPinned
@@ -42,9 +46,9 @@ type Props = {
 export const CalculationResults = ({ primary, results }: Props) => (
 	<div className='flex flex-col w-max self-start'>
 		{results.map((res) => (
-			<div key={res.currency} className='mt-[-4px] flex justify-between gap-2 w-full'>
-				<AmountDisplay rate={res.calculation} currencyName={res.currency} />
+			<div key={res.currency} className='mt-[-4px] flex gap-2 w-full'>
 				<PinButton primary={primary} secondary={res.currency} />
+				<AmountDisplay rate={res.calculation} currencyName={res.currency} />
 			</div>
 		))}
 	</div>
