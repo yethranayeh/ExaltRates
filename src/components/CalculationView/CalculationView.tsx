@@ -18,7 +18,7 @@ import { currencies } from "../../constant";
 export function CalculationView() {
 	const { preferences } = useStorage();
 	const [selected, setSelected] = useState<CurrencyKey | "">(preferences.starred ?? "");
-	const [value, setValue] = useState(preferences.starred ? "1" : "");
+	const [value, setValue] = useState("1");
 	const currencyMap = useCurrencyMapData();
 
 	const results = useMemo(() => {
