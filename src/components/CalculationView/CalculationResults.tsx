@@ -1,65 +1,81 @@
-import { Pin, PinOff } from "lucide-react";
-import clsx from "clsx";
+import { useMemo } from "react";
+import { DatabaseBackup } from "lucide-react";
 
-import { useStorage } from "../../hooks/useStorage";
+import { convert } from "../../utils/convert";
+import { useCurrencyMapData } from "../../hooks/useCurrencyMap";
 
+import { PinButton } from "./PinButton";
 import { AmountDisplay } from "../AmountDisplay";
+import { ConfidenceColor } from "./ConfidenceColor";
+import { ColorInfo } from "./Informational/ColorInfo";
 
-function PinButton({ primary, secondary }: { primary: CurrencyKey; secondary: CurrencyKey }) {
-	const {
-		setPreferences,
-		preferences: { pinned }
-	} = useStorage();
-
-	const isCurrentlyPinned = pinned?.primary === primary && pinned?.secondary === secondary;
-
-	return (
-		<button
-			title={isCurrentlyPinned ? "Unpin" : "Pin to top"}
-			type='button'
-			className={clsx(
-				"hover:text-primary-main transition-colors",
-				isCurrentlyPinned ? "text-primary-main" : "text-primary-dark"
-			)}
-			onClick={() => {
-				setPreferences(
-					isCurrentlyPinned
-						? { pinned: null }
-						: {
-								pinned: {
-									primary: primary,
-									secondary: secondary
-								}
-						  }
-				);
-			}}>
-			{isCurrentlyPinned ? <PinOff className='w-4 h-4' /> : <Pin className='w-4 h-4' />}
-		</button>
-	);
-}
+import { currencies } from "../../constant";
 
 type Props = {
-	primary: CurrencyKey;
-	results: ConversionResults;
+	selected: CurrencyKey;
+	value: string;
 };
 
-export const CalculationResults = ({ primary, results }: Props) => (
-	<div className='flex flex-col w-max self-start'>
-		{results.conversions.map((res) => (
-			<div key={res.currency} className='mt-[-4px] flex gap-2 w-full items-center relative'>
-				<PinButton primary={primary} secondary={res.currency} />
+export const CalculationResults = ({ selected, value }: Props) => {
+	const currencyMap = useCurrencyMapData()!;
 
-				<div
-					className='flex flex-row items-center gap-1'
-					title={`Based on the collected data, confidence rating for this calculation is: ${res.confidence}%`}>
-					<div
-						className='flex items-center justify-center min-w-[2px] max-w-[2px] min-h-[20px] overflow-hidden  text-transparent font-[FontinBold] text-nowrap text-xs select-none transition-all hover:min-w-[104px] hover:text-white hover:px-1'
-						style={{ backgroundColor: `hsl(${(res.confidence / results.highestConfidence) * 120}, 70%, 50%)` }}>
-						<span>Confidence: {res.confidence}%</span>
-					</div>
-					<AmountDisplay rate={res.calculation} currencyName={res.currency} />
+	const results = useMemo(() => {
+		const values: ConversionResults = { conversions: [], highestConfidence: 0 };
+		if (!selected || !currencyMap) {
+			return values;
+		}
+
+		try {
+			for (const currency of currencies.filter((c) => c !== selected)) {
+				const conversion = convert(selected, currency, currencyMap);
+
+				if (conversion.rate == null) {
+					continue;
+				}
+
+				if (conversion.confidence && conversion.confidence > values.highestConfidence) {
+					values.highestConfidence = conversion.confidence;
+				}
+
+				values.conversions.push({
+					currency,
+					calculation: value ? parseFloat(value) * conversion.rate : 0,
+					confidence: conversion.confidence ?? 0
+				});
+			}
+		} catch (e) {
+			console.error(e);
+		}
+
+		return values;
+	}, [selected, value, currencyMap]);
+
+	return (
+		<div className='flex flex-col gap-2'>
+			{selected && (
+				<div className='flex flex-col w-max self-start'>
+					{results.conversions.map((res) => (
+						<div key={res.currency} className='mt-[-4px] flex gap-2 w-full items-center relative'>
+							<PinButton primary={selected} secondary={res.currency} />
+
+							<div
+								className='flex flex-row items-center gap-1'
+								title={`Based on the collected data, confidence rating for this calculation is: ${res.confidence}%`}>
+								<ConfidenceColor confidence={res.confidence} highestConfidence={results.highestConfidence} />
+								<AmountDisplay rate={res.calculation} currencyName={res.currency} />
+							</div>
+						</div>
+					))}
 				</div>
+			)}
+
+			<div className='flex flex-col gap-2'>
+				<ColorInfo />
+
+				<p className='flex items-center gap-1 text-selected-dark italic text-xs'>
+					<DatabaseBackup className='w-4 h-4' /> Last Updated: {new Date(currencyMap.meta.createdAt).toLocaleString()}
+				</p>
 			</div>
-		))}
-	</div>
-);
+		</div>
+	);
+};
