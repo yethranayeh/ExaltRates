@@ -7,8 +7,6 @@ import { useStorage } from "../../hooks/useStorage";
 
 import { CurrencyIcon } from "../CurrencyIcon";
 
-import { currencies } from "../../constant";
-
 export function PinnedConversion() {
 	const {
 		setPreferences,
@@ -26,12 +24,12 @@ export function PinnedConversion() {
 		<div className='flex select-none items-center text-primary-dark text-sm'>
 			<div className='flex flex-row items-center'>
 				<span>1×</span>
-				<CurrencyIcon size={30} index={currencies.indexOf(pinned.primary)} />
+				<CurrencyIcon size={30} name={pinned.primary} />
 			</div>
 			<span>equals</span>
 			<div className={clsx("flex flex-row items-center ml-1", conversionRate === null ? "text-red-900" : undefined)}>
 				<span>{conversionRate ? conversionRate?.toFixed(2) : 0}×</span>
-				<CurrencyIcon size={30} index={currencies.indexOf(pinned.secondary)} />
+				<CurrencyIcon size={30} name={pinned.secondary} />
 			</div>
 			<button
 				title='Unpin conversion'

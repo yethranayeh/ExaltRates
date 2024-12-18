@@ -16,7 +16,7 @@ export const Component = ({ selected, setSelected }: Props) => (
 			"md:grid-cols-4 md:gap-2",
 			"lg:grid-cols-2 lg:row-span-2 lg:border-b-0 lg:pb-0 lg:pr-4 lg:border-r lg:border-1 "
 		)}>
-		{currencies.map((c, index) => (
+		{currencies.map((c) => (
 			<button
 				key={c}
 				title={c}
@@ -25,7 +25,7 @@ export const Component = ({ selected, setSelected }: Props) => (
 					selected === c ? "opacity-100 scale-110 lg:scale-105" : "opacity-50"
 				)}
 				onClick={() => setSelected(c)}>
-				<CurrencyIcon index={index} />
+				<CurrencyIcon name={c} />
 				<span className='hidden text-sm md:block md:text-md lg:text-lg'>{c}</span>
 			</button>
 		))}
