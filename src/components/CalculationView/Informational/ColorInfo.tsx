@@ -46,7 +46,7 @@ export function ColorInfo() {
 					</p>
 					<p>
 						When the color is closer to <span className='bg-red-700 px-1 text-white'>red</span>, it probably does not
-						represent real-world exchange rates.
+						represent the latest exchange rates.
 					</p>
 
 					<p className='hidden md:inline'>You can also hover over the color indicator to see the exact score.</p>
