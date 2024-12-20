@@ -1,11 +1,11 @@
 import { PinOff } from "lucide-react";
 import clsx from "clsx";
 
-import { getCache } from "../../../utils/storage";
-import { convert } from "../../../utils/convert";
-import { useStorage } from "../../../hooks/useStorage";
+import { getCache } from "@/utils/storage";
+import { convert } from "@/utils/convert";
+import { useStorage } from "@/hooks/useStorage";
 
-import { CurrencyIcon } from "../../../components/CurrencyIcon";
+import { CurrencyIcon } from "@/components/CurrencyIcon";
 
 export function PinnedConversion() {
 	const {
@@ -21,7 +21,7 @@ export function PinnedConversion() {
 	const conversionRate = convert(pinned.primary, pinned.secondary, currencyMap).rate;
 
 	return (
-		<div className='flex select-none items-center text-primary-main text-sm self-center'>
+		<div className='flex gap-1 select-none items-center text-primary-main text-md self-center sm:text-lg'>
 			<div className='flex flex-row items-center'>
 				<span>1×</span>
 				<CurrencyIcon size={30} name={pinned.primary} />
