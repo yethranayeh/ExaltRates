@@ -25,19 +25,17 @@ export function CalculationView() {
 	}
 
 	return (
-		<div className='w-full flex flex-1 overflow-x-hidden justify-center px-4'>
-			<div className={clsx("flex flex-col h-min gap-4", "lg:gap-6 lg:flex-row")}>
-				<CurrencySelection selected={selected} setSelected={setSelected} />
+		<div className={clsx("flex flex-col h-min gap-4", "lg:gap-6 lg:flex-row")}>
+			<CurrencySelection selected={selected} setSelected={setSelected} />
 
-				<div className='flex flex-col h-full gap-4 md:min-w-[410px]'>
-					{selected ? (
-						<CurrencyInput value={value} setValue={setValue} selected={selected} />
-					) : (
-						<p>Please select a currency</p>
-					)}
+			<div className='flex flex-col h-full gap-4 md:min-w-[410px]'>
+				{selected ? (
+					<CurrencyInput value={value} setValue={setValue} selected={selected} />
+				) : (
+					<p>Please select a currency</p>
+				)}
 
-					<ErrorBoundary>{selected && <CalculationResults selected={selected} value={value} />}</ErrorBoundary>
-				</div>
+				<ErrorBoundary>{selected && <CalculationResults selected={selected} value={value} />}</ErrorBoundary>
 			</div>
 		</div>
 	);

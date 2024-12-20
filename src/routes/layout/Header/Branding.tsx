@@ -1,4 +1,4 @@
-import { CurrencyIcon } from "../CurrencyIcon";
+import { CurrencyIcon } from "../../../components/CurrencyIcon";
 
 export const Branding = () => (
 	<div className='flex items-center '>

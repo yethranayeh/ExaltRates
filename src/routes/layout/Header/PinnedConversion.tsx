@@ -1,11 +1,11 @@
 import { PinOff } from "lucide-react";
 import clsx from "clsx";
 
-import { getCache } from "../../utils/storage";
-import { convert } from "../../utils/convert";
-import { useStorage } from "../../hooks/useStorage";
+import { getCache } from "../../../utils/storage";
+import { convert } from "../../../utils/convert";
+import { useStorage } from "../../../hooks/useStorage";
 
-import { CurrencyIcon } from "../CurrencyIcon";
+import { CurrencyIcon } from "../../../components/CurrencyIcon";
 
 export function PinnedConversion() {
 	const {
