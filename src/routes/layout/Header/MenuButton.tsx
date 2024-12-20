@@ -1,17 +1,14 @@
 import { Menu } from "lucide-react";
+import { useAtom } from "jotai";
 
-import { Sheet, SheetTrigger } from "@/components/shadcn/Sheet";
-
-import { SideMenu } from "../menu/SideMenu";
+import { menuOpenAtom } from "@/state/menu.atom";
 
 export function MenuButton() {
-	return (
-		<Sheet>
-			<SheetTrigger>
-				<Menu className='w-8 h-8' />
-			</SheetTrigger>
+	const [_, setIsMenuOpen] = useAtom(menuOpenAtom);
 
-			<SideMenu />
-		</Sheet>
+	return (
+		<button type='button' onClick={() => setIsMenuOpen((prev) => !prev)}>
+			<Menu className='w-8 h-8' />
+		</button>
 	);
 }

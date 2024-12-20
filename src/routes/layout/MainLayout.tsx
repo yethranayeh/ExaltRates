@@ -7,6 +7,7 @@ import { AuthGuard } from "../../utils/AuthGuard";
 import { CurrencyMapProvider } from "../../utils/CurrencyMapProvider";
 import { StorageProvider } from "../../utils/StorageProvider";
 import ErrorBoundary from "../../components/ErrorBoundary";
+import { SideMenu } from "./menu/SideMenu";
 
 export function MainLayout() {
 	return (
@@ -16,6 +17,8 @@ export function MainLayout() {
 					<StorageProvider>
 						<ErrorBoundary>
 							<Header />
+							<SideMenu />
+
 							<div className='w-full flex flex-1 overflow-x-hidden justify-center px-4'>
 								<Outlet />
 							</div>
