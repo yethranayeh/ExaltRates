@@ -1,5 +1,6 @@
 const cacheKey = "currencyMapCache";
 const preferencesKey = "preferences";
+
 const initialPreferences: Preference = {
 	pinned: null,
 	starred: null,
@@ -27,11 +28,13 @@ export function getPreferences() {
 	return JSON.parse(localStorage.getItem(preferencesKey)!) as Preference;
 }
 
-if (!localStorage.getItem(preferencesKey)) {
-	setPreferences(initialPreferences);
-} else {
-	// Even if preferences exist, new additions to here will have to be considered. So, it is better to always write inital values on load, then overwrite with existing values.
-	const pref = getPreferences();
+export function setInitialStorageValues() {
+	if (!localStorage.getItem(preferencesKey)) {
+		setPreferences(initialPreferences);
+	} else {
+		// Even if preferences exist, new additions to here will have to be considered. So, it is better to always write inital values on load, then overwrite with existing values.
+		const pref = getPreferences();
 
-	setPreferences({ ...initialPreferences, ...pref });
+		setPreferences({ ...initialPreferences, ...pref });
+	}
 }

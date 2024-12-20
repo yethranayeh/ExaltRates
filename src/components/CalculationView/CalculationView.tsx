@@ -2,9 +2,7 @@ import { useState } from "react";
 import clsx from "clsx";
 
 import { useStorage } from "../../hooks/useStorage";
-import { useCurrencyMapData } from "../../hooks/useCurrencyMap";
 
-import { Gears } from "../Gears";
 import { CurrencySelection } from "./CurrencySelection";
 import { CalculationResults } from "./CalculationResults";
 import { CurrencyInput } from "./CurrencyInput";
@@ -14,15 +12,6 @@ export function CalculationView() {
 	const { preferences } = useStorage();
 	const [selected, setSelected] = useState<CurrencyKey | "">(preferences.starred ?? "");
 	const [value, setValue] = useState("1");
-	const currencyMap = useCurrencyMapData();
-
-	if (currencyMap == null) {
-		return (
-			<div className='flex-1'>
-				<Gears />
-			</div>
-		);
-	}
 
 	return (
 		<div className={clsx("flex flex-col h-min gap-4", "lg:gap-6 lg:flex-row")}>

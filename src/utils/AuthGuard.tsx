@@ -1,4 +1,3 @@
-import clsx from "clsx";
 import { PropsWithChildren, useEffect, useState } from "react";
 import { getAuth, signInAnonymously } from "firebase/auth";
 import { getFirestore } from "firebase/firestore";
@@ -31,17 +30,32 @@ export function AuthGuard(props: PropsWithChildren) {
 			});
 	}, []);
 
-	if (!isSignedIn && !isLoading) {
+	if (isLoading) {
+		return <Gears isLoading />;
+	}
+
+	if (error) {
 		return (
-			<div className={clsx("flex flex-1 flex-col items-center mt-4", isLoading ? "loading" : undefined)}>
+			<div className='flex flex-1 flex-col items-center mt-4'>
 				<Alert variant='destructive' className='w-full max-w-[450px] z-50 bg-black'>
 					<AlertCircle className='h-4 w-4' />
 					<AlertTitle>Error</AlertTitle>
 					<AlertDescription>
 						<p>There was a problem while connecting to the server. Please try again later.</p>
-						{error && <p>{error}</p>}
+						<p>{error}</p>
 					</AlertDescription>
 				</Alert>
+
+				<Gears />
+			</div>
+		);
+	}
+
+	if (!isSignedIn) {
+		return (
+			<div className='flex flex-1 flex-col items-center mt-4'>
+				<p>Unable to sign in. Please try again later.</p>
+
 				<Gears />
 			</div>
 		);
