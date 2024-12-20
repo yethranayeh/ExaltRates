@@ -15,6 +15,7 @@ function App() {
 			<Routes>
 				<Route element={<MainLayout />}>
 					<Route index element={<HomePage />} />
+					<Route path='*' element={<div>404</div>} />
 				</Route>
 			</Routes>
 		</BrowserRouter>

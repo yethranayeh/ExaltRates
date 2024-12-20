@@ -21,7 +21,7 @@ export function PinnedConversion() {
 	const conversionRate = convert(pinned.primary, pinned.secondary, currencyMap).rate;
 
 	return (
-		<div className='flex select-none items-center text-primary-main text-sm'>
+		<div className='flex select-none items-center text-primary-main text-sm self-center'>
 			<div className='flex flex-row items-center'>
 				<span>1×</span>
 				<CurrencyIcon size={30} name={pinned.primary} />
