@@ -26,7 +26,7 @@ export const CalculationResults = ({ selected, value }: Props) => {
 		}
 
 		try {
-			for (const currency of currencies.filter((c) => c !== selected)) {
+			for (const currency of currencies.filter((c) => c !== selected && c !== "Mirror of Kalandra")) {
 				const conversion = convert(selected, currency, currencyMap);
 
 				if (conversion.rate == null) {
