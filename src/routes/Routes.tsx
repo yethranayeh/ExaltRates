@@ -1,12 +1,13 @@
 import { Route, Routes as RouterRotues } from "react-router";
 
 import { MainLayout } from "./layout/MainLayout";
-import { CalculationView as HomePage } from "@/components/CalculationView";
+import { Home } from "@/pages/Home";
+
 export function Routes() {
 	return (
 		<RouterRotues>
 			<Route element={<MainLayout />}>
-				<Route index element={<HomePage />} />
+				<Route index element={<Home />} />
 				<Route
 					path='/graphs'
 					element={

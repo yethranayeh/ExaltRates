@@ -3,8 +3,8 @@ import { MessageSquareWarning } from "lucide-react";
 import { useStorage } from "../../../hooks/useStorage";
 import { useCurrencyMapData } from "../../../hooks/useCurrencyMap";
 
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "../../shadcn/Accordion";
-import { Button } from "../../shadcn/Button";
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "../../../components/shadcn/Accordion";
+import { Button } from "../../../components/shadcn/Button";
 
 export function ColorInfo() {
 	const currencyMap = useCurrencyMapData();

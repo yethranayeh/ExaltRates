@@ -1,4 +1,4 @@
-import { useCurrencyMapData } from "../../hooks/useCurrencyMap";
+import { useCurrencyMapData } from "@/hooks/useCurrencyMap";
 import { calculateConfidenceHue } from "./utils/calculateConfidenceHue";
 
 export function ConfidenceColor({ confidence, highestConfidence }: { confidence: number; highestConfidence: number }) {

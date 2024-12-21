@@ -2,10 +2,10 @@ import type { ChangeEvent } from "react";
 import { useCallback } from "react";
 import { Star, StarOff } from "lucide-react";
 
-import { useStorage } from "../../hooks/useStorage";
+import { useStorage } from "@/hooks/useStorage";
 
-import { Currency } from "../Currency";
-import { Input } from "../shadcn/Input";
+import { Currency } from "@/components/Currency";
+import { Input } from "@/components/shadcn/Input";
 
 function StarButton({ currency }: { currency: CurrencyKey }) {
 	const { setPreferences, preferences } = useStorage();

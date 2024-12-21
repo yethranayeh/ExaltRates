@@ -1,8 +1,8 @@
 import clsx from "clsx";
 import { memo } from "react";
 
-import { CurrencyIcon } from "../CurrencyIcon";
-import { currencies } from "../../constant";
+import { CurrencyIcon } from "@/components/CurrencyIcon";
+import { currencies } from "@/constant";
 
 type Props = {
 	selected: CurrencyKey | "";

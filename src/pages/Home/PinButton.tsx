@@ -1,7 +1,7 @@
 import { Pin, PinOff } from "lucide-react";
 import clsx from "clsx";
 
-import { useStorage } from "../../hooks/useStorage";
+import { useStorage } from "@/hooks/useStorage";
 
 export function PinButton({ primary, secondary }: { primary: CurrencyKey; secondary: CurrencyKey }) {
 	const {

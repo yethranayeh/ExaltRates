@@ -1,12 +1,12 @@
 import { useState } from "react";
 import clsx from "clsx";
 
-import { useStorage } from "../../hooks/useStorage";
+import { useStorage } from "@/hooks/useStorage";
 
 import { CurrencySelection } from "./CurrencySelection";
 import { CalculationResults } from "./CalculationResults";
 import { CurrencyInput } from "./CurrencyInput";
-import ErrorBoundary from "../ErrorBoundary";
+import ErrorBoundary from "@/components/ErrorBoundary";
 
 export function CalculationView() {
 	const { preferences } = useStorage();

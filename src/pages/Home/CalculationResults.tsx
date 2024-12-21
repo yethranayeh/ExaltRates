@@ -1,15 +1,15 @@
 import { useMemo } from "react";
 import { DatabaseBackup } from "lucide-react";
 
-import { convert } from "../../utils/convert";
-import { useCurrencyMapData } from "../../hooks/useCurrencyMap";
+import { convert } from "@/utils/convert";
+import { useCurrencyMapData } from "@/hooks/useCurrencyMap";
 
+import { AmountDisplay } from "@/components/AmountDisplay";
 import { PinButton } from "./PinButton";
-import { AmountDisplay } from "../AmountDisplay";
 import { ConfidenceColor } from "./ConfidenceColor";
 import { ColorInfo } from "./Informational/ColorInfo";
 
-import { currencies } from "../../constant";
+import { currencies } from "@/constant";
 
 type Props = {
 	selected: CurrencyKey;
