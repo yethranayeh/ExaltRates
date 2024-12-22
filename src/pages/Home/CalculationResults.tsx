@@ -17,7 +17,7 @@ type Props = {
 };
 
 export const CalculationResults = ({ selected, value }: Props) => {
-	const currencyMap = useCurrencyMapData()!;
+	const currencyMap = useCurrencyMapData()![0];
 
 	const results = useMemo(() => {
 		const values: ConversionResults = { conversions: [], highestConfidence: 0 };

@@ -7,7 +7,7 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "..
 import { Button } from "../../../components/shadcn/Button";
 
 export function ColorInfo() {
-	const currencyMap = useCurrencyMapData();
+	const currencyMap = useCurrencyMapData()![0];
 
 	const {
 		setPreferences,
@@ -37,9 +37,7 @@ export function ColorInfo() {
 					<p>
 						The score is influenced by the <span className='underline'>amount</span> of data available for that
 						particular exchange and the{" "}
-						<span
-							className='underline'
-							title={currencyMap ? new Date(currencyMap.meta.createdAt).toLocaleString() : ""}>
+						<span className='underline' title={new Date(currencyMap.meta.createdAt).toLocaleString()}>
 							time
 						</span>{" "}
 						when that exchange was recorded.

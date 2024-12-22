@@ -6,7 +6,7 @@ import { currencies } from "@/constant";
 
 type Props = {
 	selected: CurrencyKey | "";
-	setSelected: SetStateFn<Props["selected"]>;
+	setSelected: (key: CurrencyKey) => void;
 };
 
 export const Component = ({ selected, setSelected }: Props) => (

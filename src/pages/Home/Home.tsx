@@ -3,7 +3,7 @@ import { StorageProvider } from "@/utils/StorageProvider";
 import { CalculationView } from "./CalculationView";
 
 export const Home = () => (
-	<CurrencyMapProvider>
+	<CurrencyMapProvider mode='latest'>
 		<StorageProvider>
 			<CalculationView />
 		</StorageProvider>

@@ -9,13 +9,13 @@ import ErrorBoundary from "@/components/ErrorBoundary";
 
 export function MainLayout() {
 	return (
-		<div className='flex flex-col gap-4 min-h-screen'>
+		<div className='flex flex-col gap-4 min-h-screen overflow-x-hidden'>
 			<AuthGuard>
 				<ErrorBoundary>
 					<Header />
 					<SideMenu />
 
-					<div className='w-full flex flex-1 overflow-x-hidden justify-center px-4'>
+					<div className='w-full flex flex-1 justify-center px-4'>
 						<Outlet />
 					</div>
 					<Footer />

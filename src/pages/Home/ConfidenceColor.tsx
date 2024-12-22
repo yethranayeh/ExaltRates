@@ -2,7 +2,7 @@ import { useCurrencyMapData } from "@/hooks/useCurrencyMap";
 import { calculateConfidenceHue } from "./utils/calculateConfidenceHue";
 
 export function ConfidenceColor({ confidence, highestConfidence }: { confidence: number; highestConfidence: number }) {
-	const currencyMap = useCurrencyMapData()!;
+	const currencyMap = useCurrencyMapData()![0];
 
 	return (
 		<div

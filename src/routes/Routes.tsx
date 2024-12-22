@@ -1,21 +1,16 @@
 import { Route, Routes as RouterRotues } from "react-router";
 
 import { MainLayout } from "./layout/MainLayout";
-import { Home } from "@/pages/Home";
+
+import Home from "@/pages/Home";
+import ExchangeRateCharts from "@/pages/charts";
 
 export function Routes() {
 	return (
 		<RouterRotues>
 			<Route element={<MainLayout />}>
 				<Route index element={<Home />} />
-				<Route
-					path='/graphs'
-					element={
-						<div>
-							<p>This page is not yet available.</p> <p>There will be graphs about rate trends.</p>
-						</div>
-					}
-				/>
+				<Route path='/charts' element={<ExchangeRateCharts />} />
 				<Route
 					path='/settings'
 					element={

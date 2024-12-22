@@ -5,7 +5,7 @@ import { StorageContext } from "../context/StorageContext";
 import { useCurrencyMapData } from "../hooks/useCurrencyMap";
 
 export function StorageProvider(props: PropsWithChildren) {
-	const currencyMap = useCurrencyMapData();
+	const currencyMap = useCurrencyMapData()![0];
 	const [cacheState, setCacheState] = useState(getCache());
 	const [preferencesState, setPreferencesState] = useState(getPreferences());
 
