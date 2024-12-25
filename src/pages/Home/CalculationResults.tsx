@@ -1,5 +1,4 @@
 import { useMemo } from "react";
-import { DatabaseBackup } from "lucide-react";
 
 import { convert } from "@/utils/convert";
 import { useCurrencyMapData } from "@/hooks/useCurrencyMap";
@@ -8,9 +7,9 @@ import { AmountDisplay } from "@/components/AmountDisplay";
 import { PinButton } from "./PinButton";
 import { ConfidenceColor } from "./ConfidenceColor";
 import { ColorInfo } from "./Informational/ColorInfo";
+import { UpdateTime } from "./UpdateTime";
 
 import { currencies } from "@/constant";
-import { formatDistance } from "date-fns";
 
 type Props = {
 	selected: CurrencyKey;
@@ -73,10 +72,7 @@ export const CalculationResults = ({ selected, value }: Props) => {
 			<div className='flex flex-col gap-2'>
 				<ColorInfo />
 
-				<p className='flex items-center gap-1 text-selected-dark italic text-xs'>
-					<DatabaseBackup className='w-4 h-4' /> Last updated{" "}
-					{formatDistance(new Date(currencyMap.meta.createdAt), new Date(), { addSuffix: true, includeSeconds: true })}
-				</p>
+				<UpdateTime />
 			</div>
 		</div>
 	);
