@@ -10,6 +10,7 @@ import { ConfidenceColor } from "./ConfidenceColor";
 import { ColorInfo } from "./Informational/ColorInfo";
 
 import { currencies } from "@/constant";
+import { formatDistance } from "date-fns";
 
 type Props = {
 	selected: CurrencyKey;
@@ -73,7 +74,8 @@ export const CalculationResults = ({ selected, value }: Props) => {
 				<ColorInfo />
 
 				<p className='flex items-center gap-1 text-selected-dark italic text-xs'>
-					<DatabaseBackup className='w-4 h-4' /> Last Updated: {new Date(currencyMap.meta.createdAt).toLocaleString()}
+					<DatabaseBackup className='w-4 h-4' /> Last updated{" "}
+					{formatDistance(new Date(currencyMap.meta.createdAt), new Date(), { addSuffix: true, includeSeconds: true })}
 				</p>
 			</div>
 		</div>
