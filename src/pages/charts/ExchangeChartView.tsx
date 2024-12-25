@@ -1,14 +1,16 @@
 import { useMemo, useState } from "react";
 import { Area, AreaChart, CartesianGrid, XAxis, YAxis } from "recharts";
+import { isAfter, sub } from "date-fns";
 
-import { ChartConfig, ChartContainer } from "@/components/shadcn/Chart";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/shadcn/Select";
 import { useCurrencyMapData } from "@/hooks/useCurrencyMap";
 import { convert } from "@/utils/convert";
+
 import { Currency } from "@/components/Currency";
-import { isAfter, sub } from "date-fns";
-import { currencies } from "@/constant";
 import { Label } from "@/components/shadcn/Label";
+import { ChartConfig, ChartContainer, ChartTooltip, ChartTooltipContent } from "@/components/shadcn/Chart";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/shadcn/Select";
+
+import { currencies } from "@/constant";
 
 function getCssVarSafeString(unsafe: string) {
 	return unsafe.replaceAll(" ", "").replaceAll("'", "");
@@ -41,6 +43,13 @@ export function ExchangeChartView() {
 
 			return { ...res, date: data.meta.createdAt };
 		});
+
+	const filteredCurrencies = currencies.filter(
+		(c) =>
+			filteredData.filter((data) => Object.keys(data).includes(getCssVarSafeString(c))).length > 1 &&
+			c !== selected &&
+			c !== "Mirror of Kalandra"
+	);
 
 	const chartConfig = useMemo(() => {
 		const config: Record<string, { label: CurrencyKey; color: string }> = {};
@@ -103,62 +112,70 @@ export function ExchangeChartView() {
 			</div>
 
 			<div className='grid grid-cols-1 gap-y-8 ml-[-40px] md:grid-cols-2 xl:grid-cols-3'>
-				{currencies
-					.filter(
-						(c) =>
-							filteredData.some((data) => Object.keys(data).includes(getCssVarSafeString(c))) &&
-							c !== selected &&
-							c !== "Mirror of Kalandra"
-					)
-					.map((currency) => {
-						const cssSafeName = getCssVarSafeString(currency);
+				{filteredCurrencies.map((currency) => {
+					const cssSafeName = getCssVarSafeString(currency);
 
-						return (
-							<div key={currency} className='flex flex-col items-center gap-4'>
-								<div className='pl-6'>
-									<Currency name={chartConfig[cssSafeName].label} />
-								</div>
-								<ChartContainer config={chartConfig} className='aspect-auto h-[140px] w-full border-dashed'>
-									<AreaChart data={filteredData}>
-										<defs>
-											<linearGradient key={cssSafeName} id={`fill${cssSafeName}`} x1='0' y1='0' x2='0' y2='1'>
-												<stop offset='5%' stopColor={`var(--color-${cssSafeName}, crimson)`} stopOpacity={0.8} />
-												<stop offset='95%' stopColor={`var(--color-${cssSafeName}, crimson)`} stopOpacity={0.1} />
-											</linearGradient>
-										</defs>
-
-										<CartesianGrid vertical={false} />
-
-										<XAxis
-											dataKey='date'
-											tickLine={false}
-											axisLine={false}
-											tickMargin={8}
-											minTickGap={32}
-											tickFormatter={(value) => {
-												const date = new Date(value);
-												return date.toLocaleDateString("en-US", {
-													month: "short",
-													day: "numeric"
-												});
-											}}
-										/>
-
-										<YAxis tickLine={false} axisLine={false} tickMargin={2} tickCount={4} />
-
-										<Area
-											key={cssSafeName}
-											dataKey={cssSafeName}
-											type='basis'
-											fill={`url(#fill${cssSafeName})`}
-											stroke={`var(--color-${cssSafeName}, #ff3960)`}
-											stackId='a'
-										/>
-									</AreaChart>
-								</ChartContainer>
+					return (
+						<div key={currency} className='flex flex-col items-center gap-4'>
+							<div className='pl-6'>
+								<Currency name={chartConfig[cssSafeName].label} />
 							</div>
-						);
-					})}
+							<ChartContainer config={chartConfig} className='aspect-auto h-[140px] w-full border-dashed'>
+								<AreaChart data={filteredData}>
+									<defs>
+										<linearGradient key={cssSafeName} id={`fill${cssSafeName}`} x1='0' y1='0' x2='0' y2='1'>
+											<stop offset='5%' stopColor={`var(--color-${cssSafeName}, crimson)`} stopOpacity={0.8} />
+											<stop offset='95%' stopColor={`var(--color-${cssSafeName}, crimson)`} stopOpacity={0.1} />
+										</linearGradient>
+									</defs>
+
+									<CartesianGrid vertical={false} />
+
+									<XAxis
+										dataKey='date'
+										tickLine={false}
+										axisLine={false}
+										tickMargin={8}
+										minTickGap={32}
+										tickFormatter={(value) => {
+											const date = new Date(value);
+											return date.toLocaleDateString("en-US", {
+												month: "short",
+												day: "numeric"
+											});
+										}}
+									/>
+
+									<YAxis tickLine={false} axisLine={false} tickMargin={2} tickCount={4} />
+
+									<Area
+										dot
+										dataKey={cssSafeName}
+										type='monotone'
+										fill={`url(#fill${cssSafeName})`}
+										stroke={`var(--color-${cssSafeName}, #ff3960)`}
+									/>
+
+									<ChartTooltip
+										content={
+											<ChartTooltipContent
+												labelFormatter={(v) => {
+													const date = new Date(v);
+													return date.toLocaleDateString("en-US", {
+														month: "short",
+														day: "numeric",
+														hour: "numeric",
+														minute: "numeric"
+													});
+												}}
+											/>
+										}
+									/>
+								</AreaChart>
+							</ChartContainer>
+						</div>
+					);
+				})}
 			</div>
 		</div>
 	);
