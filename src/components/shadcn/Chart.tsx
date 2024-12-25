@@ -169,7 +169,7 @@ const ChartTooltipContent = React.forwardRef<
 							<div
 								key={item.dataKey}
 								className={cn(
-									"flex w-full flex-wrap items-stretch gap-2 [&>svg]:h-2.5 [&>svg]:w-2.5 [&>svg]:text-primary-dark",
+									"flex w-full flex-wrap items-stretch gap-1 [&>svg]:h-2.5 [&>svg]:w-2.5 [&>svg]:text-primary-dark",
 									indicator === "dot" && "items-center"
 								)}>
 								{formatter && item?.value !== undefined && item.name ? (
@@ -198,7 +198,7 @@ const ChartTooltipContent = React.forwardRef<
 										)}
 										<div
 											className={cn(
-												"flex flex-1 justify-between leading-none",
+												"flex flex-1 justify-between leading-none gap-2",
 												nestLabel ? "items-end" : "items-center"
 											)}>
 											<div className='grid gap-1.5'>
