@@ -32,13 +32,14 @@ export function ExchangeChartView() {
 			for (const key of Object.keys(selection)) {
 				const cssVarSafeName = getCssVarSafeString(key);
 
-				const rate = convert(selected, key as CurrencyKey, data).rate;
+				const conversion = convert(selected, key as CurrencyKey, data);
 
-				if (!rate) {
+				if (!conversion.rate) {
 					continue;
 				}
 
-				res[cssVarSafeName] = rate;
+				res[cssVarSafeName] = conversion.rate;
+				res[`${cssVarSafeName}-confidence`] = conversion.confidence;
 			}
 
 			return { ...res, date: data.meta.createdAt };
@@ -159,14 +160,21 @@ export function ExchangeChartView() {
 									<ChartTooltip
 										content={
 											<ChartTooltipContent
-												labelFormatter={(v) => {
-													const date = new Date(v);
-													return date.toLocaleDateString("en-US", {
+												labelFormatter={(v, values) => {
+													const data = values[0];
+													const confidenceScore = data.payload[`${data.name}-confidence`];
+													const date = new Date(v).toLocaleDateString("en-US", {
 														month: "short",
 														day: "numeric",
 														hour: "numeric",
 														minute: "numeric"
 													});
+													return (
+														<p className='flex flex-col'>
+															<span>{date}</span>
+															<span>Confidence: {confidenceScore}</span>
+														</p>
+													);
 												}}
 											/>
 										}

@@ -61,7 +61,11 @@ export const CalculationResults = ({ selected, value }: Props) => {
 							<div
 								className='flex flex-row items-center gap-1'
 								title={`Based on the collected data, confidence rating for this calculation is: ${res.confidence}%`}>
-								<ConfidenceColor confidence={res.confidence} highestConfidence={results.highestConfidence} />
+								<ConfidenceColor
+									confidence={res.confidence}
+									highestConfidence={results.highestConfidence}
+									timeString={currencyMap.meta.createdAt}
+								/>
 								<AmountDisplay rate={res.calculation} currencyName={res.currency} />
 							</div>
 						</div>
