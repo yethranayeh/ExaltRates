@@ -20,8 +20,16 @@ export function UpdateTime() {
 	}, [currencyMap.meta.createdAt]);
 
 	return (
-		<p className='flex items-center gap-1 text-selected-dark italic text-xs'>
-			<DatabaseBackup className='w-4 h-4' /> Last updated {lastUpdated}
-		</p>
+		<div className='flex flex-col gap-1'>
+			<p className='flex items-center gap-1 italic text-xs'>
+				<DatabaseBackup className='w-4 h-4' /> Last updated {lastUpdated}
+			</p>
+			<p className='text-primary-dark text-sm'>
+				*Data is collected from{" "}
+				<a href='https://www.pathofexile.com/trade2/search/poe2/Standard' target='_blank' className='underline'>
+					PoE 2 Trade
+				</a>
+			</p>
+		</div>
 	);
 }
