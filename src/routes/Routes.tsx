@@ -4,6 +4,7 @@ import { MainLayout } from "./layout/MainLayout";
 
 import Home from "@/pages/Home";
 import ExchangeRateCharts from "@/pages/charts";
+import FAQPage from "@/pages/faq";
 
 export function Routes() {
 	return (
@@ -20,14 +21,7 @@ export function Routes() {
 						</div>
 					}
 				/>
-				<Route
-					path='/faq'
-					element={
-						<div>
-							<p>This page is not yet available.</p>
-						</div>
-					}
-				/>
+				<Route path='/faq' element={<FAQPage />} />
 				<Route
 					path='*'
 					element={
