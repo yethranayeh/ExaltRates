@@ -10,6 +10,8 @@ import { ColorInfo } from "./Informational/ColorInfo";
 import { UpdateTime } from "./UpdateTime";
 
 import { currencies } from "@/constant";
+import { Alert, AlertDescription, AlertTitle } from "@/components/shadcn/Alert";
+import { AlertCircle } from "lucide-react";
 
 type Props = {
 	selected: CurrencyKey;
@@ -54,6 +56,16 @@ export const CalculationResults = ({ selected, value }: Props) => {
 		<div className='flex flex-col gap-2'>
 			{selected && (
 				<div className='flex flex-col w-max self-start'>
+					{results.conversions.length === 0 && (
+						<Alert variant='destructive' className='max-w-[400px]'>
+							<AlertCircle className='h-4 w-4' />
+							<AlertTitle>No Data</AlertTitle>
+							<AlertDescription>
+								No exchange listing was recorded for "{selected}" at{" "}
+								{new Date(currencyMap.meta.createdAt).toLocaleTimeString()}
+							</AlertDescription>
+						</Alert>
+					)}
 					{results.conversions.map((res) => (
 						<div key={res.currency} className='mt-[-4px] flex gap-2 w-full items-center relative'>
 							<PinButton primary={selected} secondary={res.currency} />
