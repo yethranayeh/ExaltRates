@@ -7,7 +7,7 @@ export function MenuButton() {
 	const [_, setIsMenuOpen] = useAtom(menuOpenAtom);
 
 	return (
-		<button type='button' onClick={() => setIsMenuOpen((prev) => !prev)}>
+		<button type='button' onClick={() => setIsMenuOpen((prev) => !prev)} className='inline-block md:hidden'>
 			<Menu className='w-8 h-8' />
 		</button>
 	);

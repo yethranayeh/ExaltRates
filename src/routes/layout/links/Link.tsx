@@ -17,7 +17,7 @@ export const Link = ({ Icon, to, text }: { Icon?: any; to: string; text: string 
 				{Icon ? (
 					<Icon />
 				) : (
-					<ChevronRight className={cn("w-0 h-6 transition-all group-hover:w-6 ", isActive ? "w-6" : undefined)} />
+					<ChevronRight className={cn("w-0 h-6 transition-all group-hover:w-4 ", isActive ? "w-4" : undefined)} />
 				)}{" "}
 				<span>{text}</span>
 			</>
