@@ -12,6 +12,7 @@ export function Routes() {
 			<Route element={<MainLayout />}>
 				<Route index element={<Home />} />
 				<Route path='/charts' element={<ExchangeRateCharts />} />
+				<Route path='/graphs' element={<ExchangeRateCharts />} />
 				<Route
 					path='/settings'
 					element={
