@@ -19,10 +19,6 @@ export function PinnedConversion() {
 
 	const conversionRate = convert(pinned.primary, pinned.secondary, cachedCurrencyMap).rate;
 
-	if (!conversionRate) {
-		return null;
-	}
-
 	return (
 		<div className='flex gap-1 select-none items-center text-primary-main text-md self-center sm:text-lg'>
 			<div className='flex flex-row items-center'>
@@ -30,8 +26,10 @@ export function PinnedConversion() {
 				<CurrencyIcon size={30} name={pinned.primary} />
 			</div>
 			<span>equals</span>
-			<div className={clsx("flex flex-row items-center ml-1", conversionRate === null ? "text-red-900" : undefined)}>
-				<span>{conversionRate ? conversionRate?.toFixed(2) : 0}×</span>
+			<div
+				className={clsx("flex flex-row items-center ml-1", conversionRate === null ? "text-red-900" : undefined)}
+				title={conversionRate == null ? "No exchange rate available from the latest collected data" : undefined}>
+				<span>{conversionRate ? conversionRate?.toFixed(2) : "?"}×</span>
 				<CurrencyIcon size={30} name={pinned.secondary} />
 			</div>
 			<button
