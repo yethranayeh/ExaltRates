@@ -1,17 +1,18 @@
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
+import { AlertCircle } from "lucide-react";
 
 import { convert } from "@/utils/convert";
 import { useCurrencyMapData } from "@/hooks/useCurrencyMap";
 
+import { Alert, AlertDescription, AlertTitle } from "@/components/shadcn/Alert";
 import { AmountDisplay } from "@/components/AmountDisplay";
+import { Checkbox } from "@/components/shadcn/Checkbox";
 import { PinButton } from "./PinButton";
 import { ConfidenceColor } from "./ConfidenceColor";
 import { ColorInfo } from "./Informational/ColorInfo";
 import { UpdateTime } from "./UpdateTime";
 
 import { currencies } from "@/constant";
-import { Alert, AlertDescription, AlertTitle } from "@/components/shadcn/Alert";
-import { AlertCircle } from "lucide-react";
 
 type Props = {
 	selected: CurrencyKey;
@@ -20,6 +21,7 @@ type Props = {
 
 export const CalculationResults = ({ selected, value }: Props) => {
 	const currencyMap = useCurrencyMapData()![0];
+	const [isLowConfVisible, setIsLowConfVisible] = useState(false);
 
 	const results = useMemo(() => {
 		const values: ConversionResults = { conversions: [], highestConfidence: 0 };
@@ -49,14 +51,18 @@ export const CalculationResults = ({ selected, value }: Props) => {
 			console.error(e);
 		}
 
+		if (!isLowConfVisible) {
+			values.conversions = values.conversions.filter((c) => c.confidence > 50);
+		}
+
 		return values;
-	}, [selected, value, currencyMap]);
+	}, [selected, value, isLowConfVisible, currencyMap]);
 
 	return (
 		<div className='flex flex-col gap-2'>
 			{selected && (
 				<div className='flex flex-col w-max self-start'>
-					{results.conversions.length === 0 && (
+					{results.conversions.length === 0 ? (
 						<Alert variant='destructive' className='max-w-[400px]'>
 							<AlertCircle className='h-4 w-4' />
 							<AlertTitle>No Data</AlertTitle>
@@ -65,23 +71,37 @@ export const CalculationResults = ({ selected, value }: Props) => {
 								{new Date(currencyMap.meta.createdAt).toLocaleTimeString()}
 							</AlertDescription>
 						</Alert>
-					)}
-					{results.conversions.map((res) => (
-						<div key={res.currency} className='mt-[-4px] flex gap-2 w-full items-center relative'>
-							<PinButton primary={selected} secondary={res.currency} />
-
-							<div
-								className='flex flex-row items-center gap-1'
-								title={`Based on the collected data, confidence rating for this calculation is: ${res.confidence}%`}>
-								<ConfidenceColor
-									confidence={res.confidence}
-									highestConfidence={results.highestConfidence}
-									timeString={currencyMap.meta.createdAt}
+					) : (
+						<>
+							<div className='flex items-center space-x-2 cursor-pointer mb-4'>
+								<Checkbox
+									id='show-low-confidence'
+									checked={isLowConfVisible}
+									onCheckedChange={(c) => setIsLowConfVisible(!!c)}
 								/>
-								<AmountDisplay rate={res.calculation} currencyName={res.currency} />
+								<label htmlFor='show-low-confidence' className='text-sm font-medium leading-none cursor-pointer'>
+									Show low confidence
+								</label>
 							</div>
-						</div>
-					))}
+
+							{results.conversions.map((res) => (
+								<div key={res.currency} className='mt-[-4px] flex gap-2 w-full items-center relative'>
+									<PinButton primary={selected} secondary={res.currency} />
+
+									<div
+										className='flex flex-row items-center gap-1'
+										title={`Based on the collected data, confidence rating for this calculation is: ${res.confidence}%`}>
+										<ConfidenceColor
+											confidence={res.confidence}
+											highestConfidence={results.highestConfidence}
+											timeString={currencyMap.meta.createdAt}
+										/>
+										<AmountDisplay rate={res.calculation} currencyName={res.currency} />
+									</div>
+								</div>
+							))}
+						</>
+					)}
 				</div>
 			)}
 

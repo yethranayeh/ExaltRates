@@ -16,7 +16,7 @@ export function PinButton({ primary, secondary }: { primary: CurrencyKey; second
 			title={isCurrentlyPinned ? "Unpin" : "Pin to top"}
 			type='button'
 			className={clsx(
-				"hover:text-primary-main transition-colors",
+				"hover:text-primary-main transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary-light",
 				isCurrentlyPinned ? "text-primary-main" : "text-primary-dark"
 			)}
 			onClick={() => {
