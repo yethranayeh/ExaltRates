@@ -1,12 +1,16 @@
 import { useContext, useEffect, useState, type PropsWithChildren } from "react";
 import { collection, getDocs, limit, orderBy, query, where } from "firebase/firestore";
-import { DatabaseContext } from "@/context/DatabaseContext";
+import { sub } from "date-fns";
+
+import { useStorage } from "@/hooks/useStorage";
+
 import { CenterChild } from "@/components/CenterChild";
 import { Alert, AlertDescription, AlertTitle } from "@/components/shadcn/Alert";
 import { Button } from "@/components/shadcn/Button";
 import { Gears } from "@/components/Gears";
+
+import { DatabaseContext } from "@/context/DatabaseContext";
 import { CurrencyMapContext } from "@/context/CurrencyMapContext";
-import { sub } from "date-fns";
 
 interface CurrencyMapProviderProps extends PropsWithChildren {
 	mode: "latest" | "monthly";
@@ -15,6 +19,7 @@ interface CurrencyMapProviderProps extends PropsWithChildren {
 export function CurrencyMapProvider({ mode, children }: CurrencyMapProviderProps) {
 	const db = useContext(DatabaseContext);
 	const [currencyMap, setCurrencyMap] = useState<RateDefinitions[] | null>(null);
+	const storage = useStorage();
 
 	const [error, setError] = useState<string | null>(null);
 	const [isLoadingDelayed, setIsLoadingDelayed] = useState(false);
@@ -81,6 +86,16 @@ export function CurrencyMapProvider({ mode, children }: CurrencyMapProviderProps
 
 		return () => clearTimeout(loadingDelayTimeout);
 	}, [db, mode]);
+
+	useEffect(() => {
+		if (currencyMap?.length) {
+			const latest = currencyMap.slice(-1)[0];
+
+			if (storage.cache?.meta.createdAt !== latest.meta.createdAt) {
+				storage.setCache(latest);
+			}
+		}
+	}, [currencyMap, storage.cache]);
 
 	if (error) {
 		return (
