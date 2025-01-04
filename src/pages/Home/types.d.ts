@@ -1,4 +1,6 @@
+type Conversions = Array<{ currency: CurrencyKey; calculation: number; confidence: number }>;
 type ConversionResults = {
-	conversions: Array<{ currency: CurrencyKey; calculation: number; confidence: number }>;
+	all: Conversions;
+	highConfidence: Conversions;
 	highestConfidence: number;
 };

@@ -24,13 +24,15 @@ export const CalculationResults = ({ selected, value }: Props) => {
 	const [isLowConfVisible, setIsLowConfVisible] = useState(false);
 
 	const results = useMemo(() => {
-		const values: ConversionResults = { conversions: [], highestConfidence: 0 };
+		const values: ConversionResults = { all: [], highConfidence: [], highestConfidence: 0 };
 		if (!selected || !currencyMap) {
 			return values;
 		}
 
+		const filteredCurrencies = currencies.filter((c) => c !== selected && c !== "Mirror of Kalandra");
+
 		try {
-			for (const currency of currencies.filter((c) => c !== selected && c !== "Mirror of Kalandra")) {
+			for (const currency of filteredCurrencies) {
 				const conversion = convert(selected, currency, currencyMap);
 
 				if (conversion.rate == null) {
@@ -41,28 +43,29 @@ export const CalculationResults = ({ selected, value }: Props) => {
 					values.highestConfidence = conversion.confidence;
 				}
 
-				values.conversions.push({
+				const result = {
 					currency,
 					calculation: value ? parseFloat(value) * conversion.rate : 0,
 					confidence: conversion.confidence ?? 0
-				});
+				};
+				values.all.push(result);
+
+				if (result.confidence > 50) {
+					values.highConfidence.push(result);
+				}
 			}
 		} catch (e) {
 			console.error(e);
 		}
 
-		if (!isLowConfVisible) {
-			values.conversions = values.conversions.filter((c) => c.confidence > 50);
-		}
-
 		return values;
-	}, [selected, value, isLowConfVisible, currencyMap]);
+	}, [selected, value, currencyMap]);
 
 	return (
 		<div className='flex flex-col gap-2'>
 			{selected && (
 				<div className='flex flex-col w-max self-start'>
-					{results.conversions.length === 0 ? (
+					{results.all.length === 0 ? (
 						<Alert variant='destructive' className='max-w-[400px]'>
 							<AlertCircle className='h-4 w-4' />
 							<AlertTitle>No Data</AlertTitle>
@@ -84,7 +87,21 @@ export const CalculationResults = ({ selected, value }: Props) => {
 								</label>
 							</div>
 
-							{results.conversions.map((res) => (
+							{/* TODO: refactor. maybe a separate component */}
+							{isLowConfVisible === false && results["highConfidence"].length === 0 && (
+								<Alert variant='destructive' className='max-w-[400px]'>
+									<AlertCircle className='h-4 w-4' />
+									<AlertTitle>No High Confidence</AlertTitle>
+									<AlertDescription>
+										Out of the <span className='font-[FontinBold]'>{results.all.length}</span> exchange results, none of
+										them have higher than <span className='font-[FontinBold]'>50%</span> confidence rating. If you still
+										want to view those exchange rates, you can check the{" "}
+										<span className='underline'>Show low confidence</span> option above.
+									</AlertDescription>
+								</Alert>
+							)}
+
+							{results[isLowConfVisible ? "all" : "highConfidence"].map((res) => (
 								<div key={res.currency} className='mt-[-4px] flex gap-2 w-full items-center relative'>
 									<PinButton primary={selected} secondary={res.currency} />
 
