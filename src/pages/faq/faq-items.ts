@@ -25,7 +25,7 @@ export const faqItems = [
 			'The exchange rate calculation is a 3 step process that is repeated for each currency. Firstly, the collected data is checked for any outliers, like people intentionally listing 1x Armourer\'s Scrap for 9999999x Exalted Orb. Secondly, the "mean" and the "median" values for exchange rates are calculated. Then, a "confidence score" is calculated for both the mean and the median values. Between the mean and the median values, the one with the higher confidence score is prioritized as the calculation result. Finally, all these values come together to provide a conversion data between CurrencyA and CurrencyB.'
 	},
 	{
-		question: "How accurate are the currency rates?",
+		question: "How accurate are the exchange rates?",
 		answer:
 			'The accuracy of the exchange rates completely depend on the amount of data that was available when the listings were recorded. At max, a total of 200 trade listings can be recorded between two currencies at any given time, since the PoE 2 trade page limits the total shown listings to 100. So, as mentioned in the "data collection" question, the trade listings are recorded multiple times throughout each day to improve accuracy.'
 	},

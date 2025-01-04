@@ -67,7 +67,7 @@ export const CalculationResults = ({ selected, value }: Props) => {
 							<AlertCircle className='h-4 w-4' />
 							<AlertTitle>No Data</AlertTitle>
 							<AlertDescription>
-								No exchange listing was recorded for "{selected}" at{" "}
+								No reliable data was collected for "{selected}" at{" "}
 								{new Date(currencyMap.meta.createdAt).toLocaleTimeString()}
 							</AlertDescription>
 						</Alert>
