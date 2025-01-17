@@ -1,13 +1,13 @@
 export const faqItems = [
 	{
-		question: "What is it?",
+		question: "What is Exalt Rates?",
 		answer:
 			"Exalt Rates is simply an exchange rate calculator. The main goal of this website is to be able to provide reliable exchange rates for currency listings posted on Path of Exile 2 trade page."
 	},
 	{
 		question: "How is data collected?",
 		answer:
-			"Unfortunately, Grinding Gear Games currently does not provide API registrations for PoE 2, so it is a manual process. The data is collected from the official Path of Exile 2 trade and exchange page. For each currency that is available on the calculator, the default (mixed) and the most recent listing are recorded, then processed through some functions to calculate rates. The trade listings are recorded more than a couple of times throughout the day to improve accuracy."
+			"Unfortunately, Grinding Gear Games currently does not provide API registrations for PoE 2, so it is a manual process. The data is collected from the official Path of Exile 2 trade and exchange page. For each currency that is available on Exalt Rates, the trade results listed for that curency are checked on PoE 2 trade page, collected, then collectively processed through some functions to calculate mean/median rates. The trade listings are recorded more than a couple of times throughout the day to improve overall accuracy. Though, you can still occasionally see results like 1x Divine Orb = 1x Orb of Augmentation, with a high confidence score. It is sadly the nature of this type of data collecting, and it is currently the best I can personally do."
 	},
 	{
 		question: "Why should I use this instead of in-game Currency Exchange?",
