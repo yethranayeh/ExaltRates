@@ -11,6 +11,7 @@ import { Gears } from "@/components/Gears";
 
 import { DatabaseContext } from "@/context/DatabaseContext";
 import { CurrencyMapContext } from "@/context/CurrencyMapContext";
+import { gameVersion } from "@/config";
 
 interface CurrencyMapProviderProps extends PropsWithChildren {
 	mode: "latest" | "monthly";
@@ -32,7 +33,7 @@ export function CurrencyMapProvider({ mode, children }: CurrencyMapProviderProps
 		const fetchCurrencyData = async () => {
 			try {
 				if (mode === "latest") {
-					const collectionRef = collection(db, "rates");
+					const collectionRef = collection(db, gameVersion);
 					const q = query(collectionRef, orderBy("meta.createdAt", "desc"), limit(1));
 					const querySnapshot = await getDocs(q);
 
