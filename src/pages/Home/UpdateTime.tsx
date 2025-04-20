@@ -26,7 +26,10 @@ export function UpdateTime() {
 			</p>
 			<p className='text-primary-dark text-sm'>
 				*Data is collected from{" "}
-				<a href='https://www.pathofexile.com/trade2/search/poe2/Standard' target='_blank' className='underline'>
+				<a
+					href='https://www.pathofexile.com/trade2/search/poe2/Dawn%20of%20the%20Hunt'
+					target='_blank'
+					className='underline'>
 					PoE 2 Trade
 				</a>
 			</p>

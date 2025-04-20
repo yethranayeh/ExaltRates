@@ -32,8 +32,8 @@ export function CurrencyMapProvider({ mode, children }: CurrencyMapProviderProps
 
 		const fetchCurrencyData = async () => {
 			try {
+				const collectionRef = collection(db, gameVersion);
 				if (mode === "latest") {
-					const collectionRef = collection(db, gameVersion);
 					const q = query(collectionRef, orderBy("meta.createdAt", "desc"), limit(1));
 					const querySnapshot = await getDocs(q);
 
@@ -47,9 +47,6 @@ export function CurrencyMapProvider({ mode, children }: CurrencyMapProviderProps
 					}
 				} else if (mode === "monthly") {
 					const thirtyDaysAgo = sub(new Date(), { days: 30 });
-
-					const collectionRef = collection(db, "rates");
-
 					const q = query(
 						collectionRef,
 						where("meta.createdAt", ">=", thirtyDaysAgo.toISOString()),
