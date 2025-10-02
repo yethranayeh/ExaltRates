@@ -1,34 +1,34 @@
 import { PropsWithChildren, useEffect, useState } from "react";
-import { getAuth, signInAnonymously } from "firebase/auth";
+// import { getAuth, signInAnonymously } from "firebase/auth";
 import { getFirestore } from "firebase/firestore";
 import { AlertCircle } from "lucide-react";
 
 import { DatabaseContext } from "../context/DatabaseContext";
 
-import { app } from "../firebase";
+// import { app } from "../firebase";
 import { Gears } from "../components/Gears";
 import { Alert, AlertDescription, AlertTitle } from "../components/shadcn/Alert";
 
 export function AuthGuard(props: PropsWithChildren) {
-	const [isLoading, setIsLoading] = useState(true);
+	const [isLoading, setIsLoading] = useState(false);
 	const [error, setError] = useState("");
-	const [isSignedIn, setIsSignedIn] = useState(false);
+	const [isSignedIn, setIsSignedIn] = useState(true);
 
-	useEffect(() => {
-		const auth = getAuth();
-		signInAnonymously(auth)
-			.then(() => {
-				setIsSignedIn(true);
-				setIsLoading(false);
-			})
-			.catch((error) => {
-				setIsLoading(false);
+	// useEffect(() => {
+	// 	const auth = getAuth();
+	// 	signInAnonymously(auth)
+	// 		.then(() => {
+	// 			setIsSignedIn(true);
+	// 			setIsLoading(false);
+	// 		})
+	// 		.catch((error) => {
+	// 			setIsLoading(false);
 
-				const errorCode = error.code;
-				const errorMessage = error.message;
-				setError(`[${errorCode}]: ${errorMessage}`);
-			});
-	}, []);
+	// 			const errorCode = error.code;
+	// 			const errorMessage = error.message;
+	// 			setError(`[${errorCode}]: ${errorMessage}`);
+	// 		});
+	// }, []);
 
 	if (isLoading) {
 		return <Gears isLoading />;
@@ -61,5 +61,5 @@ export function AuthGuard(props: PropsWithChildren) {
 		);
 	}
 
-	return <DatabaseContext.Provider value={getFirestore(app)}>{props.children}</DatabaseContext.Provider>;
+	return props.children;
 }
